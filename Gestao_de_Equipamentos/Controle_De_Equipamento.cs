@@ -8,31 +8,27 @@ namespace Gestao_de_Equipamentos
 {
     public class Controle_De_Equipamento
     {
-        private List<Equipamento> equipamentosRegistrados = new List<Equipamento>();
+        public List<Equipamento> equipamentosRegistrados = new List<Equipamento>();
+        Controle_De_Chamado controleChamado;
+
 
         protected int id;
-        private int serie;
+        protected int idChamado;
+        private int selecionar_Id;
+        private double serie;
         private int quantidadeMinimaCaractere = 6; // vou usar pro nome ter no minimo 6 caracteres
         protected int data_Fabricacao;
         protected decimal preco;
 
-        protected string nome;
+        public string nome;
         protected string fabricante;
 
         public void Iniciar()
         {
-            
+            controleChamado = new Controle_De_Chamado(equipamentosRegistrados);
             string opcao = ExibirMenu();
             EscolherOpcao(opcao);
         }
-        
-
-        public Controle_De_Equipamento()
-        {
-            Iniciar();
-            
-        }
-
 
         public string ExibirMenu()
         {
@@ -64,59 +60,83 @@ namespace Gestao_de_Equipamentos
             else if (opcao == "4")
                 ExcluirEquipamento();
             else if (opcao == "5")
-                CadastrarChamado();
+                controleChamado.CadastrarChamado();
             else if (opcao == "6")
-                ExibirChamado();
+                controleChamado.ExibirChamado();
             else if (opcao == "7")
-                EditarChamado();
+                controleChamado.EditarChamado();
             else if (opcao == "8")
-                ExcluirChamado();
+                controleChamado.ExcluirChamado();
             else
                 Console.WriteLine("Opção inválida. Tente novamente.");
 
         }
 
-        private void ExcluirChamado()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void EditarChamado()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ExibirChamado()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CadastrarChamado()
-        {
-            throw new NotImplementedException();
-        }
-
         private void ExcluirEquipamento()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Digite o ID do equipamento que deseja excluir");
+            int idExcluxao = int.Parse(Console.ReadLine());
+            var equipamento = equipamentosRegistrados.FirstOrDefault(e => e.registroId == idExcluxao);
+            if (equipamento == null)
+                Console.WriteLine("Equipamento não encontrado.");
+
+            equipamentosRegistrados.Remove(equipamento);
+            Console.WriteLine("Equipamento removido com sucesso!");
         }
 
         private void EditarEquipamento()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Digite o Equipamento que deseja editar");
+            selecionar_Id = int.Parse(Console.ReadLine());
+            Equipamento editar = equipamentosRegistrados.FirstOrDefault(equipamento => equipamento.registroId == selecionar_Id);
+
+            if (editar == null)
+            {
+                Console.WriteLine("Equipamento não encontrado.");
+                return;
+            }
+
+            Console.WriteLine("Digite o novo nome (ou pressione Enter para manter): ");
+            string novoNome = Console.ReadLine();
+            if (!string.IsNullOrEmpty(novoNome) && novoNome.Length >= quantidadeMinimaCaractere)
+                editar.nome = novoNome;
+
+            Console.WriteLine("Digite o novo preço (ou pressione Enter para manter): ");
+            string novoPrecoConversao = Console.ReadLine();
+            if (decimal.TryParse(novoPrecoConversao, out decimal novoPreco) && novoPreco > 0)
+                editar.preco = novoPreco;
+
+            Console.WriteLine("Digite o novo número de série (ou pressione Enter para manter): ");
+            string novoSerieConversao = Console.ReadLine();
+            if (int.TryParse(novoSerieConversao, out int novoSerie) && novoSerie > 0)
+                editar.serie = int.Parse(novoSerieConversao);
+
+            Console.WriteLine("Digite o novo fabricante (ou pressione Enter para manter)");
+            string novoFabricante = Console.ReadLine();
+            if (!string.IsNullOrEmpty(novoFabricante))
+                editar.fabricante = novoFabricante;
+
+            Console.WriteLine("Digite a nova data de fabricação (ou pressione Enter para manter): ");
+            string novaDataFabricacaoConversao = Console.ReadLine();
+            if (int.TryParse(novaDataFabricacaoConversao, out int novaDataFabricacao))
+                editar.data_Fabricacao = novaDataFabricacao;
+
+
+
+
+            Console.WriteLine("Equipamento editado com sucesso!");
+
         }
 
-        public string ExibirEquipamento()
-        {   
-            string equipamentos = "";
-            equipamentos += "Equipamentos Registrados: \n";
+        public void ExibirEquipamento()
+        {
+            Console.WriteLine("Equipamentos Registrados:");
 
             foreach (var equipamento in equipamentosRegistrados)
             {
-                equipamentos += equipamento.ToString() + "\n";
+                Console.WriteLine(equipamento.ToString() + "\n");
             }
 
-            return equipamentos;
         }
 
         private bool CadastrarEquipamento()
@@ -135,26 +155,29 @@ namespace Gestao_de_Equipamentos
 
             Console.Write("Digite o preço do equipamento: ");
             preco = decimal.Parse(Console.ReadLine());
+            Console.Write("Digite o numero de serie: ");
+            serie = double.Parse(Console.ReadLine());
             Console.Write("Digite o Fabricante do equipamento: ");
             fabricante = Console.ReadLine();
             Console.Write("Digite a data de fabricação do equipamento: ");
             data_Fabricacao = int.Parse(Console.ReadLine());
+            
 
-            RegistarEquipamento("nome", preco, "fabricante", data_Fabricacao);
+            RegistarEquipamento(id,nome, preco, fabricante, data_Fabricacao);
 
             return true;
 
         }
 
-        private void RegistarEquipamento (string nome, decimal preco, string fabricante, int data_Fabricacao)
+        private void RegistarEquipamento (int id, string nome, decimal preco, string fabricante, int data_Fabricacao)
         {
             equipamentosRegistrados.Add(new Equipamento
             {
                 registroId = equipamentosRegistrados.Count + 1,
-                nomeRegistrado = nome,
-                precoRegistrado = preco,
-                fabricanteRegistrado = fabricante,
-                data_FabricacaoRegistrada = data_Fabricacao
+                nome = nome,
+                preco = preco,
+                fabricante = fabricante,
+                data_Fabricacao = data_Fabricacao
             });
         }
 

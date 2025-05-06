@@ -9,19 +9,11 @@ namespace Gestao_de_Equipamentos
     public class Equipamento : Controle_De_Equipamento
     {
         public int registroId;
-        public decimal precoRegistrado;
-        public int data_FabricacaoRegistrada;
-        public string fabricanteRegistrado;
-        public string nomeRegistrado;
 
         public override string ToString()
         {
-            return $"ID de Registro: {registroId} | Nome: {nomeRegistrado} | Preço {precoRegistrado} | Fabricante: {fabricanteRegistrado} | Data de Fabricação: {data_FabricacaoRegistrada}";
+            return $"ID de Registro: {registroId} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante} | Data de Fabricação: {data_Fabricacao}";
         }
-
-        
-
-
 
     }
 }

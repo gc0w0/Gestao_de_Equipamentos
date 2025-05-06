@@ -1,16 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Gestao_de_Equipamentos
 {
-    internal class Controle_De_Chamado
+    public class Controle_De_Chamado
     {
+        private int id;
+        private int equipamentoChamado;
+        protected string titulo;
+        private string descricao;
+        protected string dataAbertura;
+        protected Equipamento equipamentoRelacionado;
+        public List<Equipamento> equipamentosRegistrados;
+        private List<Chamado> chamadosRegistrados = new List<Chamado>();
+
+        public Controle_De_Chamado(List<Equipamento> equipamentos)
+        {
+            equipamentosRegistrados = equipamentos ?? new List<Equipamento>();
+        }
+        public void ExcluirChamado()
+        {
+            Console.Write("Digite o ID do chamado a excluir: ");
+            id = int.Parse(Console.ReadLine());
+
+            Chamado chamado = chamadosRegistrados.FirstOrDefault(c => c.id == id);
+
+            if (chamado == null)
+            {
+                Console.WriteLine("Chamado não encontrado.");
+                return;
+            }
+
+            chamadosRegistrados.Remove(chamado);
+            Console.WriteLine("Chamado excluído com sucesso.");
+        }
+
+        public void EditarChamado()
+        {
+            Console.Write("Digite o ID do chamado que deseja editar: ");
+            id = int.Parse(Console.ReadLine());
+
+            Chamado chamado = chamadosRegistrados.FirstOrDefault(c => c.id == id);
+
+            if (chamado == null)
+                Console.WriteLine("Chamado não encontrado.");
+
+            Console.Write("Novo título (ENTER para manter): ");
+            string novoTitulo = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(novoTitulo))
+                chamado.titulo = novoTitulo;
+
+            Console.Write("Nova descrição (ENTER para manter): ");
+            string novaDescricao = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(novaDescricao))
+                chamado.descricao = novaDescricao;
+
+            Console.Write("Novo ID de equipamento (ENTER para manter): ");
+            string novoIdEquipamentoConvercao = Console.ReadLine();
+            if (int.TryParse(novoIdEquipamentoConvercao, out int novoIdEquipamento))
+            {
+                Equipamento equipamentoAlterado = equipamentosRegistrados.FirstOrDefault(e => e.registroId == novoIdEquipamento);
+                if (equipamentoAlterado != null)
+                    chamado.equipamentoRelacionado = equipamentoAlterado;
+            }
 
 
+            Console.WriteLine("Chamado atualizado.");
+        }
 
+        public void ExibirChamado()
+        {
+            Console.WriteLine("Chamados Registrados:");
+
+            foreach (var chamado in chamadosRegistrados)
+            {
+                Console.WriteLine(chamado.ToString() + "\n");
+            }
+        }
+
+        public void CadastrarChamado()
+        {
+            Console.Write("Digite o título do chamado: ");
+             titulo = Console.ReadLine();
+
+            Console.Write("Digite a descrição do chamado: ");
+             descricao = Console.ReadLine();
+
+            Console.Write("Digite o ID do equipamento relacionado: ");
+            int idEquipamento = int.Parse(Console.ReadLine());
+
+            Equipamento equipamentos = equipamentosRegistrados.FirstOrDefault(e => e.registroId == idEquipamento);
+            RegistarChamado(id,titulo, equipamentoChamado, dataAbertura);
+
+            if (equipamentos == null)
+                Console.WriteLine("Equipamento não encontrado.");
+
+        }
+
+        private void RegistarChamado( int id, string titulo, int equipamentoChamado, string dataAbertura)
+        {
+            chamadosRegistrados.Add(new Chamado
+            {
+                id = chamadosRegistrados.Count + 1,
+                equipamentoChamado = equipamentoChamado,
+                dataAbertura = dataAbertura,
+                diasEmAberto = +1
+            });
+        }
 
     }
 }
