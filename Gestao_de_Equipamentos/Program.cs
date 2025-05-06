@@ -1,26 +1,66 @@
-﻿namespace Gestao_de_Equipamentos
+﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloChamado;
+using Gestao_de_Equipamentos.ModuloEquipamento;
+
+namespace Gestao_de_Equipamentos
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Controle_De_Equipamento realizarCadastro = new Controle_De_Equipamento();
+            TelaPrincipal telaPrincipal = new TelaPrincipal();
+            telaPrincipal.ExibirOpcoesMenu();
 
-            bool iniciar = true;
-
-            while (iniciar == true)
+            while (true)
             {
-                realizarCadastro.Iniciar();
+                if (telaPrincipal.opcaoEscolhida == "s")
+                    break;
 
-                Controle_De_Chamado controleChamado = new Controle_De_Chamado(realizarCadastro.equipamentosRegistrados);
-                
+                if (telaPrincipal.opcaoEscolhida == "1")
+                {
+                    TelaEquipamento telaEquipamento = new TelaEquipamento();
 
-                Console.WriteLine("\nDeseja realizar outra operação? (s/n)");
-                string resposta = Console.ReadLine().ToLower();
-                if (resposta != "s")
-                    iniciar = false;
+                    telaEquipamento.ExibirOpcoesMenu();
+
+                    if (telaEquipamento.opcaoEscolhida == "1")
+                        telaEquipamento.InserirEquipamento();
+
+                    else if (telaEquipamento.opcaoEscolhida == "2")
+                        telaEquipamento.EditarEquipamento();
+
+                    else if (telaEquipamento.opcaoEscolhida == "3")
+                        telaEquipamento.ExcluirEquipamento();
+
+                    else if (telaEquipamento.opcaoEscolhida == "4")
+                        telaEquipamento.VisualizarEquipamentos();
+                }
+
+                else if (telaPrincipal.opcaoEscolhida == "2")
+                {
+                    TelaChamado telaChamado = new TelaChamado();
+
+                    telaChamado.ExibirOpcoesMenu();
+
+                    if (telaChamado.opcaoEscolhida == "1")
+                    {
+                        telaChamado.InserirChamado();
+                    }
+                    else if (telaChamado.opcaoEscolhida == "2")
+                    {
+                        telaChamado.EditarChamado();
+                    }
+                    else if (telaChamado.opcaoEscolhida == "3")
+                    {
+                        telaChamado.ExcluirChamado();
+                    }
+                    else if (telaChamado.opcaoEscolhida == "4")
+                    {
+                        telaChamado.VisualizarChamados();
+                    }
+                }
+
+               
             }
-
         }
     }
 }

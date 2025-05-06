@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestao_de_Equipamentos.ModuloEquipamento;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,7 +120,7 @@ namespace Gestao_de_Equipamentos
             Console.WriteLine("Digite a nova data de fabricação (ou pressione Enter para manter): ");
             string novaDataFabricacaoConversao = Console.ReadLine();
             if (int.TryParse(novaDataFabricacaoConversao, out int novaDataFabricacao))
-                editar.data_Fabricacao = novaDataFabricacao;
+                editar.dataFabricacao = novaDataFabricacao;
 
 
 
@@ -177,7 +178,7 @@ namespace Gestao_de_Equipamentos
                 nome = nome,
                 preco = preco,
                 fabricante = fabricante,
-                data_Fabricacao = data_Fabricacao
+                dataFabricacao = data_Fabricacao
             });
         }
 

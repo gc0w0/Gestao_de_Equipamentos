@@ -1,5 +1,8 @@
 ﻿
 
+using Gestao_de_Equipamentos.ModuloChamado;
+using Gestao_de_Equipamentos.ModuloEquipamento;
+
 namespace Gestao_de_Equipamentos
 {
     public class Controle_De_Chamado
