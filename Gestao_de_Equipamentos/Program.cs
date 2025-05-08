@@ -6,13 +6,13 @@
         {
             Controle_De_Equipamento realizarCadastro = new Controle_De_Equipamento();
 
+            Controle_De_Chamado controleChamado = new Controle_De_Chamado(realizarCadastro.equipamentosRegistrados);
             bool iniciar = true;
 
             while (iniciar == true)
             {
-                realizarCadastro.Iniciar();
+                realizarCadastro.Iniciar(controleChamado);
 
-                Controle_De_Chamado controleChamado = new Controle_De_Chamado(realizarCadastro.equipamentosRegistrados);
                 
 
                 Console.WriteLine("\nDeseja realizar outra operação? (s/n)");

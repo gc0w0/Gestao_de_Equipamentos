@@ -11,21 +11,21 @@ namespace Gestao_de_Equipamentos
         public List<Equipamento> equipamentosRegistrados = new List<Equipamento>();
         Controle_De_Chamado controleChamado;
 
-
+        
         protected int id;
         protected int idChamado;
         private int selecionar_Id;
         private double serie;
-        private int quantidadeMinimaCaractere = 6; // vou usar pro nome ter no minimo 6 caracteres
+        private int quantidadeMinimaCaractere = 6;
         protected int data_Fabricacao;
         protected decimal preco;
 
         public string nome;
         protected string fabricante;
 
-        public void Iniciar()
+        public void Iniciar(Controle_De_Chamado controleChamadoExistente)
         {
-            controleChamado = new Controle_De_Chamado(equipamentosRegistrados);
+            this.controleChamado = controleChamadoExistente; 
             string opcao = ExibirMenu();
             EscolherOpcao(opcao);
         }
@@ -161,7 +161,6 @@ namespace Gestao_de_Equipamentos
             fabricante = Console.ReadLine();
             Console.Write("Digite a data de fabricação do equipamento: ");
             data_Fabricacao = int.Parse(Console.ReadLine());
-            
 
             RegistarEquipamento(id,nome, preco, fabricante, data_Fabricacao);
 

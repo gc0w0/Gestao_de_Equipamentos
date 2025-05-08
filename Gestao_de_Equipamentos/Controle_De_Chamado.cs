@@ -79,31 +79,53 @@ namespace Gestao_de_Equipamentos
 
         public void CadastrarChamado()
         {
+
             Console.Write("Digite o título do chamado: ");
-             titulo = Console.ReadLine();
+            string tituloChamado = Console.ReadLine();
 
             Console.Write("Digite a descrição do chamado: ");
-             descricao = Console.ReadLine();
+            string descricaoChamado = Console.ReadLine();
 
             Console.Write("Digite o ID do equipamento relacionado: ");
             int idEquipamento = int.Parse(Console.ReadLine());
 
-            Equipamento equipamentos = equipamentosRegistrados.FirstOrDefault(e => e.registroId == idEquipamento);
-            RegistarChamado(id,titulo, equipamentoChamado, dataAbertura);
+            Equipamento equipamentoSelecionado = equipamentosRegistrados.FirstOrDefault(e => e.registroId == idEquipamento);
 
-            if (equipamentos == null)
+            if (equipamentoSelecionado == null)
+            {
                 Console.WriteLine("Equipamento não encontrado.");
+                return;
+            }
+
+            string dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
+            int diasEmAberto = 0; 
+
+            Chamado novoChamado = new Chamado
+            {
+                registroId = chamadosRegistrados.Count + 1,
+                titulo = tituloChamado,
+                descricao = descricaoChamado,
+                dataAbertura = dataAbertura,
+                equipamentoRelacionado = equipamentoSelecionado,
+                diasEmAberto = diasEmAberto
+            };
+
+            RegistarChamado( tituloChamado,  descricaoChamado,  dataAbertura,  equipamentoSelecionado,  diasEmAberto);
+
+            Console.WriteLine("Chamado registrado com sucesso!");
 
         }
 
-        private void RegistarChamado( int id, string titulo, int equipamentoChamado, string dataAbertura)
+        private void RegistarChamado(string tituloChamado, string descricaoChamado, string dataAbertura, Equipamento equipamentoSelecionado, int diasEmAberto)
         {
             chamadosRegistrados.Add(new Chamado
             {
-                id = chamadosRegistrados.Count + 1,
-                equipamentoChamado = equipamentoChamado,
+                registroId = chamadosRegistrados.Count + 1,
+                titulo = tituloChamado,
+                descricao = descricaoChamado,
                 dataAbertura = dataAbertura,
-                diasEmAberto = +1
+                equipamentoRelacionado = equipamentoSelecionado,
+                diasEmAberto = diasEmAberto
             });
         }
 
