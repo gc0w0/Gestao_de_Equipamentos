@@ -7,13 +7,13 @@ namespace Gestao_de_Equipamentos
 {
     public class Chamado : Entidade
     {
-        
         public string titulo;
         public string descricao;
         public string dataAbertura;
         public Equipamento equipamentoRelacionado;
         public int equipamentoChamado;
         public int diasEmAberto;
+
 
         public override string ToString()
         {

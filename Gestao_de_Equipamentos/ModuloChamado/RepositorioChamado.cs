@@ -7,6 +7,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
     {
         public Equipamento equipamentoRelacionado;
         public List<Equipamento> equipamentosRegistrados;
+
         public List<Chamado> chamadosRegistrados = new List<Chamado>();
         public RepositorioChamado(List<Equipamento> equipamentos)
         {

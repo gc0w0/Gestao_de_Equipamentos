@@ -10,8 +10,6 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
         public Chamado chamado;
 
-        Controle_De_Chamado controleChamado;
-
         public TelaChamado(RepositorioChamado repositorioChamado, RepositorioEquipamento repositorioEquipamento)
         {
             this.repositorioChamado = repositorioChamado;

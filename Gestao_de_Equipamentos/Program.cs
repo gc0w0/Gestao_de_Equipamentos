@@ -13,9 +13,7 @@ namespace Gestao_de_Equipamentos
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
             TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
-
             telaPrincipal.ExibirOpcoesMenu();
-
 
             while (true)
             {
