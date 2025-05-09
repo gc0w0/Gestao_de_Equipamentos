@@ -1,7 +1,6 @@
 ﻿
 using Gestao_de_Equipamentos.Compartilhado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
-using System.Diagnostics;
 
 namespace Gestao_de_Equipamentos
 {
@@ -9,16 +8,14 @@ namespace Gestao_de_Equipamentos
     {
         public string titulo;
         public string descricao;
-        public string dataAbertura;
+        public DateTime dataAbertura;
         public Equipamento equipamentoRelacionado;
-        public int equipamentoChamado;
         public int diasEmAberto;
 
 
         public override string ToString()
-        {
-            equipamentoChamado = equipamentoRelacionado.id;
-            return $" ID do Chamado:{id} Título: {titulo} | Equipamento: {equipamentoChamado} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}";
+        {            
+            return $" ID do Chamado:{id} Título: {titulo} | Equipamento: {equipamentoRelacionado.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}";
         }
     }
 }

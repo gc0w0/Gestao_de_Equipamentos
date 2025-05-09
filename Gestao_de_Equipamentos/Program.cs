@@ -9,10 +9,10 @@ namespace Gestao_de_Equipamentos
         static void Main(string[] args)
         {
             RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
-            RepositorioChamado repositorioChamado = new RepositorioChamado(repositorioEquipamento.equipamentosRegistrados);
+            RepositorioChamado repositorioChamado = new RepositorioChamado();
+
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
-            TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
             telaPrincipal.ExibirOpcoesMenu();
 
             while (true)
@@ -25,12 +25,16 @@ namespace Gestao_de_Equipamentos
 
                     if (telaEquipamento.opcaoEscolhida == "1")
                         telaEquipamento.CadastrarEquipamento();
+
                     else if (telaEquipamento.opcaoEscolhida == "2")
-                        telaEquipamento.ExibirEquipamento();
+                        telaEquipamento.ExibirEquipamentos(mostrarCabecalho: true);
+
                     else if (telaEquipamento.opcaoEscolhida == "3")
                         telaEquipamento.EditarEquipamento();
+
                     else if (telaEquipamento.opcaoEscolhida == "4")
                         telaEquipamento.ExcluirEquipamento();
+
                     else if (telaEquipamento.opcaoEscolhida == "S")
                     {
                         Console.WriteLine("Saindo do sistema...");
@@ -38,28 +42,30 @@ namespace Gestao_de_Equipamentos
                     }
                     else
                         Console.WriteLine("Opção inválida. Tente novamente.");
-
                 }
 
                 if (telaPrincipal.opcaoEscolhida == "2")
                 {
+                    TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
+
                     telaChamado.ExibirOpcoesMenu();
                     if (telaChamado.opcaoEscolhida == "1")
                         telaChamado.CadastrarChamado();
-                    else if (telaChamado.opcaoEscolhida == "2")
-                        telaChamado.ExibirChamado();
-                    else if (telaChamado.opcaoEscolhida == "3")
-                        telaChamado.EditarChamado();
-                    else if (telaChamado.opcaoEscolhida == "4")
-                        telaChamado.ExcluirChamado();
 
-                    else if (telaChamado.opcaoEscolhida == "S")
-                    {
-                        Console.WriteLine("Saindo do sistema...");
-                        telaPrincipal.ExibirOpcoesMenu();
-                    }
-                    else
-                        Console.WriteLine("Opção inválida. Tente novamente.");
+                    //    else if (telaChamado.opcaoEscolhida == "2")
+                    //        telaChamado.ExibirChamado();
+                    //    else if (telaChamado.opcaoEscolhida == "3")
+                    //        telaChamado.EditarChamado();
+                    //    else if (telaChamado.opcaoEscolhida == "4")
+                    //        telaChamado.ExcluirChamado();
+
+                    //    else if (telaChamado.opcaoEscolhida == "S")
+                    //    {
+                    //        Console.WriteLine("Saindo do sistema...");
+                    //        telaPrincipal.ExibirOpcoesMenu();
+                    //    }
+                    //    else
+                    //        Console.WriteLine("Opção inválida. Tente novamente.");
 
                 }
 

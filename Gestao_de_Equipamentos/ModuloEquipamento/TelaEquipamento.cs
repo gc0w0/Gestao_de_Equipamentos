@@ -4,30 +4,17 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 {
     public class TelaEquipamento : Tela
     {
-        
-        RepositorioEquipamento repositorioEquipamento;
-
-        public Equipamento equipamento;
-
-        Controle_De_Chamado controleChamado;
-        
+        private RepositorioEquipamento repositorioEquipamento;
 
         public TelaEquipamento(RepositorioEquipamento repositorioEquipamento)
         {
             this.repositorioEquipamento = repositorioEquipamento;
-            Iniciar(controleChamado);
-        }
-        public void Iniciar(Controle_De_Chamado controleChamadoExistente)
-        {
-
-            this.controleChamado = controleChamadoExistente;
-            //string opcao = ExibirOpcoesMenu(); // coloquei na classe de TelaEquipamento
-            //EscolherOpcao(opcao);
-
         }
 
         public string ExibirOpcoesMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("Bem-vindo ao gerenciamento de equipamentos!\n");
             Console.WriteLine("Digite 1 para cadastrar um equipamento:");
             Console.WriteLine("Digite 2 para exibir equipamentos:");
@@ -40,97 +27,132 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             return opcaoEscolhida;
         }
 
-        internal void CadastrarEquipamento()
+        public void CadastrarEquipamento()
         {
-            //Console.Write("Digite o nome do Equipamento com no minimo 6 letras: ");
-            //var nome = Console.ReadLine();
-            //Console.Write("Digite o preço do equipamento: ");
-            //var preco = decimal.Parse(Console.ReadLine());
-            //Console.Write("Digite o numero de serie: ");
-            //var serie = double.Parse(Console.ReadLine());
-            //Console.Write("Digite o Fabricante do equipamento: ");
-            //var fabricante = Console.ReadLine();
-            //Console.Write("Digite a data de fabricação do equipamento: ");
-            //var dataFabricacao = int.Parse(Console.ReadLine());
+            Console.Clear();
 
-            var equipamento = new Equipamento();
+            Console.WriteLine("Módulo de Equipamentos"); //título
 
-            equipamento.nome = "nome";
-            equipamento.preco = 312;
-            equipamento.serie = 3132;
-            equipamento.fabricante = "fabricante";
-            equipamento.dataFabricacao = 2322;
-            repositorioEquipamento.InserirEquipamento(equipamento);
-            //RegistarEquipamento(equipamento.id, equipamento.nome, equipamento.preco, equipamento.fabricante, equipamento.dataFabricacao);
-            Console.WriteLine("Equipamento registrado com sucesso \n");
+            Console.WriteLine("Cadastrando equipamentos..."); //subtítulo
 
-        }
+            Equipamento equipamento = ObterDados();
 
-        internal void EditarEquipamento()
-        {
-            Console.WriteLine("Digite o Equipamento que deseja editar");
-            var selecionar_Id = int.Parse(Console.ReadLine());
-            Equipamento editar = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(equipamento => equipamento.id == selecionar_Id);
+            string resultadoValidacao = equipamento.Validar();
 
-            if (editar == null)
+            if (resultadoValidacao != "")
             {
-                Console.WriteLine("Equipamento não encontrado.");
+                Console.WriteLine(resultadoValidacao);
+                Console.ReadKey();
+                CadastrarEquipamento();
                 return;
             }
 
-            Console.WriteLine("Digite o novo nome (ou pressione Enter para manter): ");
-            string novoNome = Console.ReadLine();
-            int numeroCaracteres = novoNome.Length;
+            repositorioEquipamento.InserirEquipamento(equipamento);
 
-            editar.Validar(numeroCaracteres);
+            Console.WriteLine("Equipamento registrado com sucesso \n");
+            Console.ReadKey();
+        }
 
-            if (!string.IsNullOrEmpty(novoNome) && novoNome.Length >= numeroCaracteres == true)
-                editar.nome = novoNome;
+        public void EditarEquipamento()
+        {
+            Console.Clear();
 
-            Console.WriteLine("Digite o novo preço (ou pressione Enter para manter): ");
-            string novoPrecoConversao = Console.ReadLine();
-            if (decimal.TryParse(novoPrecoConversao, out decimal novoPreco) && novoPreco > 0)
-                editar.preco = novoPreco;
+            Console.WriteLine("Módulo de Equipamentos"); //título
 
-            Console.WriteLine("Digite o novo número de série (ou pressione Enter para manter): ");
-            string novoSerieConversao = Console.ReadLine();
-            if (int.TryParse(novoSerieConversao, out int novoSerie) && novoSerie > 0)
-                editar.serie = int.Parse(novoSerieConversao);
+            Console.WriteLine("Editando equipamentos..."); //subtítulo
 
-            Console.WriteLine("Digite o novo fabricante (ou pressione Enter para manter)");
-            string novoFabricante = Console.ReadLine();
-            if (!string.IsNullOrEmpty(novoFabricante))
-                editar.fabricante = novoFabricante;
+            ExibirEquipamentos(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite a nova data de fabricação (ou pressione Enter para manter): ");
-            string novaDataFabricacaoConversao = Console.ReadLine();
-            if (int.TryParse(novaDataFabricacaoConversao, out int novaDataFabricacao))
-                editar.dataFabricacao = novaDataFabricacao;
+            Console.WriteLine("Digite o Equipamento que deseja editar");
+            var id = int.Parse(Console.ReadLine());
+
+            Equipamento equipamento = ObterDados();
+
+            bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(id, equipamento);
+
+            if (conseguiuEditar == false)
+            {
+                Console.WriteLine("Não foi possível editar o registro selecionado");
+                Console.ReadKey();
+                EditarEquipamento();
+                return;
+            }
 
             Console.WriteLine("Equipamento editado com sucesso!");
-
+            Console.ReadKey();
         }
 
-        internal void ExcluirEquipamento()
+        public void ExcluirEquipamento()
         {
-            Console.WriteLine("Digite o ID do equipamento que deseja excluir");
-            int idExcluxao = int.Parse(Console.ReadLine());
-            var equipamento = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == idExcluxao);
-            if (equipamento == null)
-                Console.WriteLine("Equipamento não encontrado.");
+            Console.Clear();
 
-            repositorioEquipamento.equipamentosRegistrados.Remove(equipamento);
-            Console.WriteLine("Equipamento removido com sucesso!");
-        }
+            Console.WriteLine("Módulo de Equipamentos"); //título
 
-        internal void ExibirEquipamento()
-        {
-            Console.WriteLine("Equipamentos Registrados:");
+            Console.WriteLine("Excluindo equipamentos..."); //subtítulo
 
-            foreach (var equipamento in repositorioEquipamento.equipamentosRegistrados)
+            ExibirEquipamentos(mostrarCabecalho: false);
+
+            Console.WriteLine("Digite o Equipamento que deseja excluir");
+            var id = int.Parse(Console.ReadLine());
+
+            bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(id);
+
+            if (conseguiuExcluir == false)
             {
-                Console.WriteLine(equipamento.ToString() + "\n");
+                Console.WriteLine("Não foi possível excluir o registro selecionado");
+                Console.ReadKey();
+                ExcluirEquipamento();
+                return;
             }
+
+            Console.WriteLine("Equipamento removido com sucesso!");
+            Console.ReadKey();
+        }
+
+        public void ExibirEquipamentos(bool mostrarCabecalho)
+        {
+            if (mostrarCabecalho)
+            {
+                Console.Clear();
+
+                Console.WriteLine("Módulo de Equipamentos"); //título
+
+                Console.WriteLine("Visualizando equipamentos..."); //subtítulo
+            }
+
+            List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
+
+            foreach (var e in equipamentos)
+            {
+                Console.WriteLine(e.ToString() + "\n");
+            }
+        }
+
+        private Equipamento ObterDados()
+        {
+            Console.Write("Digite o novo nome: ");
+            string novoNome = Console.ReadLine();
+
+            Console.Write("Digite o novo preço: ");
+            decimal novoPreco = decimal.Parse(Console.ReadLine());
+
+            Console.Write("Digite o novo número de série: ");
+            int novoSerieConversao = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o novo fabricante");
+            string novoFabricante = Console.ReadLine();
+
+            Console.Write("Digite a nova data de fabricação: ");
+            DateTime novaDataFabricacao = DateTime.Parse(Console.ReadLine());
+
+            var equipamento = new Equipamento();
+            equipamento.nome = novoNome;
+            equipamento.preco = novoPreco;
+            equipamento.serie = novoSerieConversao;
+            equipamento.fabricante = novoFabricante;
+            equipamento.dataFabricacao = novaDataFabricacao;
+
+            return equipamento;
         }
 
     }

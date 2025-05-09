@@ -6,7 +6,7 @@ public class Equipamento : Entidade
 {
     public double serie;
     public string nome;
-    public int dataFabricacao;
+    public DateTime dataFabricacao;
     public decimal preco;
     public string fabricante;
 
@@ -15,14 +15,26 @@ public class Equipamento : Entidade
         return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante} | Data de Fabricação: {dataFabricacao}";
     }
 
-    public bool Validar(int quantidadeMinimaCaractere)
+    public string Validar()
     {
-        quantidadeMinimaCaractere = 6; // vou usar pro nome ter no minimo 6 caracteres
+        string resultadoValidacao = "";
 
-        if (nome.Length > quantidadeMinimaCaractere)
-            return false;
+        if (string.IsNullOrEmpty(nome))
+            resultadoValidacao += "O campo \"nome\" é obrigatório" + "\n";
 
-        return true;
+        if (nome.Length < 3)
+            resultadoValidacao += "O campo \"nome\" precisa ter no mínimo 3 letras" + "\n";
+
+        if (preco < 0)
+            resultadoValidacao += "O campo \"preço\" precisa não pode ser negativo" + "\n";
+
+        if (string.IsNullOrEmpty(fabricante))
+            resultadoValidacao += "O campo \"fabricante\" é obrigatório" + "\n";
+
+        if (serie == 0)
+            resultadoValidacao += "O campo \"serie\" é obrigatório" + "\n";
+
+        return resultadoValidacao;
     }
 
 }

@@ -8,7 +8,6 @@ namespace Gestao_de_Equipamentos.ModuloChamado
         RepositorioEquipamento repositorioEquipamento;
         RepositorioChamado repositorioChamado;
 
-        public Chamado chamado;
 
         public TelaChamado(RepositorioChamado repositorioChamado, RepositorioEquipamento repositorioEquipamento)
         {
@@ -32,8 +31,15 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
         internal void CadastrarChamado()
         {
+            Console.WriteLine("Cadastro de Chamados");
 
+            Console.WriteLine();
 
+            Chamado chamado = ObterDados();
+
+            //repositorioChamado.CadastrarChamado(chamado);
+
+            #region codigo comentado
             //Console.Write("Digite o título do chamado: ");
             //string tituloChamado = Console.ReadLine();
 
@@ -42,30 +48,31 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             //Console.Write("Digite o ID do equipamento relacionado: ");
             //int idEquipamento = int.Parse(Console.ReadLine());
-            var idEquipamento = 1;
-            Equipamento equipamentoSelecionado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == idEquipamento);
+            //var idEquipamento = 1;
+            //Equipamento equipamentoSelecionado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == idEquipamento);
 
-            //if (equipamentoSelecionado == null)
-            //{
-            //    Console.WriteLine("Equipamento não encontrado.");
-            //    return;
-            //}
+            ////if (equipamentoSelecionado == null)
+            ////{
+            ////    Console.WriteLine("Equipamento não encontrado.");
+            ////    return;
+            ////}
 
-            //string dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
-            int diasEmAberto = 0;
+            ////string dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
+            //int diasEmAberto = 0;
 
 
-            var chamado = new Chamado();
-            
-            chamado.titulo = "tituloChamado";
-            chamado.descricao = "descricaoChamado";
-            chamado.dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
-            chamado.equipamentoRelacionado = equipamentoSelecionado;
-            chamado.diasEmAberto = diasEmAberto;
+            //var chamado = new Chamado();
 
-            repositorioChamado.InserirChamado(chamado);
+            //chamado.titulo = "tituloChamado";
+            //chamado.descricao = "descricaoChamado";
+            //chamado.dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
+            //chamado.equipamentoRelacionado = equipamentoSelecionado;
+            //chamado.diasEmAberto = diasEmAberto;
 
-            Console.WriteLine("Chamado registrado com sucesso!");
+            //repositorioChamado.InserirChamado(chamado);
+
+            //Console.WriteLine("Chamado registrado com sucesso!");
+            #endregion
         }
 
         internal void EditarChamado()
@@ -90,12 +97,12 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             Console.Write("Novo ID de equipamento (ENTER para manter): ");
             string novoIdEquipamentoConvercao = Console.ReadLine();
-            if (int.TryParse(novoIdEquipamentoConvercao, out int novoIdEquipamento))
-            {
-                Equipamento equipamentoAlterado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == novoIdEquipamento);
-                if (equipamentoAlterado != null)
-                    chamado.equipamentoRelacionado = equipamentoAlterado;
-            }
+            //if (int.TryParse(novoIdEquipamentoConvercao, out int novoIdEquipamento))
+            //{
+            //    Equipamento equipamentoAlterado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == novoIdEquipamento);
+            //    if (equipamentoAlterado != null)
+            //        chamado.equipamentoRelacionado = equipamentoAlterado;
+            //}
 
 
             Console.WriteLine("Chamado atualizado.");
@@ -124,6 +131,63 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             foreach (var chamado in repositorioChamado.chamadosRegistrados)
                 Console.WriteLine(chamado.ToString() + "\n");
+        }
+
+        public Chamado ObterDados()
+        {
+            Console.Write("Digite o título do chamado: ");
+            string titulo = Console.ReadLine();
+
+            Console.Write("Digite a descrição do chamado: ");
+            string descricao = Console.ReadLine();
+
+            DateTime dataAbertura = DateTime.Now;
+
+            VisualizarEquipamentos();
+
+            Console.Write("Digite o ID do equipamento que deseja selecionar: ");
+            int idEquipamento = Convert.ToInt32(Console.ReadLine());
+
+            Equipamento equipamentoSelecionado = repositorioEquipamento.SelecionarPorId(idEquipamento);
+
+            Chamado chamado = new Chamado();
+            chamado.titulo = titulo;
+            chamado.descricao = descricao;
+            chamado.dataAbertura = dataAbertura;
+            chamado.equipamentoRelacionado = equipamentoSelecionado;
+
+            return chamado;
+        }
+
+        public void VisualizarEquipamentos()
+        {
+            Console.WriteLine();
+
+            Console.WriteLine("Visualização de Equipamentos");
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
+                "Id", "Nome", "Preço Aquisição", "Número Série", "Fabricante", "Data Fabricação"
+            );
+
+            List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
+
+            for (int i = 0; i < equipamentos.Count; i++)
+            {
+                Equipamento e = equipamentos[i];
+
+                if (e == null)
+                    continue;
+
+                Console.WriteLine (
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
+                    e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante, e.dataFabricacao.ToShortDateString()
+                );
+            }
+
+            Console.ReadLine();
         }
     }
 }
