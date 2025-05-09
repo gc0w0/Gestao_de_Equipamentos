@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Gestao_de_Equipamentos.Compartilhado
 {
-    internal class Tela
+    public class Tela
     {
+        public string opcaoEscolhida;
+
+        public string titulo;
     }
+
 }

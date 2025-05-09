@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Gestao_de_Equipamentos.Compartilhado
 {
-    public class Repositorio
+    public class Entidade
     {
-
-
-
-
+        public int id;
     }
 }

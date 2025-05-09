@@ -1,26 +1,78 @@
-﻿namespace Gestao_de_Equipamentos
+﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloChamado;
+using Gestao_de_Equipamentos.ModuloEquipamento;
+
+namespace Gestao_de_Equipamentos
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Controle_De_Equipamento realizarCadastro = new Controle_De_Equipamento();
+            RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
+            RepositorioChamado repositorioChamado = new RepositorioChamado(repositorioEquipamento.equipamentosRegistrados);
 
-            Controle_De_Chamado controleChamado = new Controle_De_Chamado(realizarCadastro.equipamentosRegistrados);
-            bool iniciar = true;
+            TelaPrincipal telaPrincipal = new TelaPrincipal();
+            TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
 
-            while (iniciar == true)
+            telaPrincipal.ExibirOpcoesMenu();
+
+
+            while (true)
             {
-                realizarCadastro.Iniciar(controleChamado);
 
-                
+                if (telaPrincipal.opcaoEscolhida == "1")
+                {
+                    TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento);
+                    telaEquipamento.ExibirOpcoesMenu();
 
-                Console.WriteLine("\nDeseja realizar outra operação? (s/n)");
-                string resposta = Console.ReadLine().ToLower();
-                if (resposta != "s")
-                    iniciar = false;
+                    if (telaEquipamento.opcaoEscolhida == "1")
+                        telaEquipamento.CadastrarEquipamento();
+                    else if (telaEquipamento.opcaoEscolhida == "2")
+                        telaEquipamento.ExibirEquipamento();
+                    else if (telaEquipamento.opcaoEscolhida == "3")
+                        telaEquipamento.EditarEquipamento();
+                    else if (telaEquipamento.opcaoEscolhida == "4")
+                        telaEquipamento.ExcluirEquipamento();
+                    else if (telaEquipamento.opcaoEscolhida == "S")
+                    {
+                        Console.WriteLine("Saindo do sistema...");
+                        telaPrincipal.ExibirOpcoesMenu();
+                    }
+                    else
+                        Console.WriteLine("Opção inválida. Tente novamente.");
+
+                }
+
+                if (telaPrincipal.opcaoEscolhida == "2")
+                {
+                    telaChamado.ExibirOpcoesMenu();
+                    if (telaChamado.opcaoEscolhida == "1")
+                        telaChamado.CadastrarChamado();
+                    else if (telaChamado.opcaoEscolhida == "2")
+                        telaChamado.ExibirChamado();
+                    else if (telaChamado.opcaoEscolhida == "3")
+                        telaChamado.EditarChamado();
+                    else if (telaChamado.opcaoEscolhida == "4")
+                        telaChamado.ExcluirChamado();
+
+                    else if (telaChamado.opcaoEscolhida == "S")
+                    {
+                        Console.WriteLine("Saindo do sistema...");
+                        telaPrincipal.ExibirOpcoesMenu();
+                    }
+                    else
+                        Console.WriteLine("Opção inválida. Tente novamente.");
+
+                }
+
+                else if (telaPrincipal.opcaoEscolhida == "S")
+                {
+                    Console.WriteLine("Saindo do sistema...");
+                    break;
+                }
+
+
             }
-
         }
     }
 }
