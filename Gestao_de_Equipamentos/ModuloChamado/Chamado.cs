@@ -9,13 +9,30 @@ namespace Gestao_de_Equipamentos
         public string titulo;
         public string descricao;
         public DateTime dataAbertura;
-        public Equipamento equipamentoRelacionado;
+        public Equipamento equipamento;
         public int diasEmAberto;
 
+        public Chamado()
+        {
+            
+        }
+
+        public Chamado(string titulo, string descricao, DateTime dataAbertura, Equipamento equipamento)
+        {
+            this.titulo = titulo;
+            this.descricao = descricao;
+            this.dataAbertura = dataAbertura;
+            this.equipamento = equipamento;
+        }
+
+        public override void MostrarInformacoes()
+        {
+            Console.WriteLine($" ID:{id} Título: {titulo} | Equipamento: {equipamento.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}");
+        }
 
         public override string ToString()
         {            
-            return $" ID do Chamado:{id} Título: {titulo} | Equipamento: {equipamentoRelacionado.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}";
+            return $" ID:{id} Título: {titulo} | Equipamento: {equipamento.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}";
         }
 
         public string Validar()

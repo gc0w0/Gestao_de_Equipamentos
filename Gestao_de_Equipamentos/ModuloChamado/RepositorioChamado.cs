@@ -22,7 +22,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             chamado.titulo = chamadoAtualizado.titulo;
             chamado.dataAbertura = chamadoAtualizado.dataAbertura;
             chamado.descricao = chamadoAtualizado.descricao;
-            chamado.equipamentoRelacionado = chamadoAtualizado.equipamentoRelacionado;
+            chamado.equipamento = chamadoAtualizado.equipamento;
             chamado.diasEmAberto = chamadoAtualizado.diasEmAberto;
 
             return true;

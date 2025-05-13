@@ -7,14 +7,33 @@ public class Equipamento : Entidade
 {
     public double serie;
     public string nome;
-    public int dataFabricacao;
-    public decimal preco;
-    public string fabricante;
-    public Fabricante fabricanteRelacionado;
+    public DateTime dataFabricacao;
+    public decimal preco;    
+    public Fabricante fabricante;
+    public List<Chamado> chamados;
+
+    public Equipamento()
+    {
+        
+    }
+
+    public Equipamento(double serie, string nome, DateTime dataFabricacao, decimal preco, Fabricante fabricante)
+    {
+        this.serie = serie;
+        this.nome = nome;
+        this.dataFabricacao = dataFabricacao;
+        this.preco = preco;
+        this.fabricante = fabricante;
+    }
 
     public override string ToString()
     {
-        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricanteRelacionado} | Data de Fabricação: {dataFabricacao}";
+        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}";
+    }
+
+    public override void MostrarInformacoes()
+    {
+        Console.WriteLine($"ID: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}");
     }
 
     public string Validar()

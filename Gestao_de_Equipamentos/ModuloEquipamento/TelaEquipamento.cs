@@ -52,7 +52,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
                 return;
             }
 
-            repositorioEquipamento.InserirEquipamento(equipamento);
+            repositorioEquipamento.InserirRegistro(equipamento);
 
             Console.WriteLine("Equipamento registrado com sucesso \n");
             Console.ReadKey();
@@ -125,7 +125,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
                 Console.WriteLine("Visualizando equipamentos..."); //subtítulo
             }
 
-            List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
+            List<Entidade> equipamentos = repositorioEquipamento.SelecionarTodos();
 
             foreach (var e in equipamentos)
             {
@@ -167,8 +167,8 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             equipamento.nome = novoNome;
             equipamento.preco = novoPreco;
             equipamento.serie = novoSerieConversao;
-            equipamento.fabricanteRelacionado = fabricanteSelecionado;
-            equipamento.dataFabricacao = novaDataFabricacao;
+            equipamento.fabricante = fabricanteSelecionado;
+            equipamento.dataFabricacao = DateTime.Now;
 
             return equipamento;
         }
@@ -186,11 +186,11 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
                 "Id", "Nome", "Email", "Telefone"
             );
 
-            List<Fabricante> fabricantes = repositorioFabricante.SelecionarTodos();
+            List<Entidade> fabricantes = repositorioFabricante.SelecionarTodos();
 
             for (int i = 0; i < fabricantes.Count; i++)
             {
-                Fabricante e = fabricantes[i];
+                Fabricante e = (Fabricante)fabricantes[i];
 
                 if (e == null)
                     continue;

@@ -1,17 +1,9 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
-using Gestao_de_Equipamentos.ModuloChamado;
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento
 {
     public class RepositorioEquipamento : Repositorio
-    {
-        private List<Equipamento> equipamentosRegistrados = new List<Equipamento>();
-
-        public void InserirEquipamento(Equipamento equipamento)
-        {
-            equipamento.id = equipamentosRegistrados.Count + 1;
-            equipamentosRegistrados.Add(equipamento);
-        }
+    {               
 
         public bool EditarEquipamento(int id, Equipamento equipamentoAtualizado)
         {
@@ -31,12 +23,12 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
         public Equipamento SelecionarPorId(int id)
         {
-             return equipamentosRegistrados.FirstOrDefault(e => e.id == id);
+             return (Equipamento)registros.FirstOrDefault(e => e.id == id);
         }
 
-        internal List<Equipamento> SelecionarTodos()
+        internal List<Entidade> SelecionarTodos()
         {
-            return equipamentosRegistrados;
+            return registros;
         }
 
         internal bool ExcluirEquipamento(int id)
@@ -46,7 +38,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             if (equipamento == null)
                 return false;
 
-            equipamentosRegistrados.Remove(equipamento);
+            registros.Remove(equipamento);
 
             return true;
         }
