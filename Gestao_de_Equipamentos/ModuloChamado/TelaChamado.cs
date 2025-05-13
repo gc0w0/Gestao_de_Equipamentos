@@ -33,11 +33,23 @@ namespace Gestao_de_Equipamentos.ModuloChamado
         {
             Console.WriteLine("Cadastro de Chamados");
 
-            Console.WriteLine();
+            Console.WriteLine("Cadastrando chamados...");
 
             Chamado chamado = ObterDados();
 
-            //repositorioChamado.CadastrarChamado(chamado);
+            string resultadoValidacao = chamado.Validar();
+            if (resultadoValidacao != "")
+            {
+                Console.WriteLine(resultadoValidacao);
+                Console.ReadKey();
+                CadastrarChamado();
+                return;
+            }
+
+            repositorioChamado.InserirChamado(chamado);
+
+            Console.WriteLine("Chamado registrado com sucesso \n");
+            Console.ReadKey();
 
             #region codigo comentado
             //Console.Write("Digite o título do chamado: ");
@@ -183,7 +195,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
                 Console.WriteLine (
                     "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
-                    e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante, e.dataFabricacao.ToShortDateString()
+                    e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante, e.dataFabricacao
                 );
             }
 

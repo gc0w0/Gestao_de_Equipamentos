@@ -1,6 +1,7 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
 using Gestao_de_Equipamentos.ModuloChamado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
+using Gestao_de_Equipamentos.ModuloFabricante;
 
 namespace Gestao_de_Equipamentos
 {
@@ -10,7 +11,7 @@ namespace Gestao_de_Equipamentos
         {
             RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
             RepositorioChamado repositorioChamado = new RepositorioChamado();
-
+            RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
             telaPrincipal.ExibirOpcoesMenu();
@@ -20,7 +21,7 @@ namespace Gestao_de_Equipamentos
 
                 if (telaPrincipal.opcaoEscolhida == "1")
                 {
-                    TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento);
+                    TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
                     telaEquipamento.ExibirOpcoesMenu();
 
                     if (telaEquipamento.opcaoEscolhida == "1")
@@ -52,20 +53,20 @@ namespace Gestao_de_Equipamentos
                     if (telaChamado.opcaoEscolhida == "1")
                         telaChamado.CadastrarChamado();
 
-                    //    else if (telaChamado.opcaoEscolhida == "2")
-                    //        telaChamado.ExibirChamado();
-                    //    else if (telaChamado.opcaoEscolhida == "3")
-                    //        telaChamado.EditarChamado();
-                    //    else if (telaChamado.opcaoEscolhida == "4")
-                    //        telaChamado.ExcluirChamado();
+                    else if (telaChamado.opcaoEscolhida == "2")
+                        telaChamado.ExibirChamado();
+                    else if (telaChamado.opcaoEscolhida == "3")
+                        telaChamado.EditarChamado();
+                    else if (telaChamado.opcaoEscolhida == "4")
+                        telaChamado.ExcluirChamado();
 
-                    //    else if (telaChamado.opcaoEscolhida == "S")
-                    //    {
-                    //        Console.WriteLine("Saindo do sistema...");
-                    //        telaPrincipal.ExibirOpcoesMenu();
-                    //    }
-                    //    else
-                    //        Console.WriteLine("Opção inválida. Tente novamente.");
+                    else if (telaChamado.opcaoEscolhida == "S")
+                    {
+                        Console.WriteLine("Saindo do sistema...");
+                        telaPrincipal.ExibirOpcoesMenu();
+                    }
+                    else
+                        Console.WriteLine("Opção inválida. Tente novamente.");
 
                 }
 
@@ -75,6 +76,32 @@ namespace Gestao_de_Equipamentos
                     break;
                 }
 
+                if (telaPrincipal.opcaoEscolhida == "3")
+                {
+                    TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
+                    telaFabricante.ExibirOpcoesMenu();
+                    if (telaFabricante.opcaoEscolhida == "1")
+                        telaFabricante.CadastrarFabricante();
+                    else if (telaFabricante.opcaoEscolhida == "2")
+                        telaFabricante.ExibirFabricante();
+                    else if (telaFabricante.opcaoEscolhida == "3")
+                        telaFabricante.EditarFabricante();
+                    else if (telaFabricante.opcaoEscolhida == "4")
+                        telaFabricante.ExcluirFabricante();
+                    else if (telaFabricante.opcaoEscolhida == "S")
+                    {
+                        Console.WriteLine("Saindo do sistema...");
+                        telaPrincipal.ExibirOpcoesMenu();
+                    }
+                    else
+                        Console.WriteLine("Opção inválida. Tente novamente.");
+                }
+
+                else if (telaPrincipal.opcaoEscolhida == "S")
+                {
+                    Console.WriteLine("Saindo do sistema...");
+                    break;
+                }
 
             }
         }

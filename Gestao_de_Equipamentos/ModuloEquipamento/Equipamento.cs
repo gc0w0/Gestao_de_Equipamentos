@@ -1,4 +1,5 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloFabricante;
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento;
 
@@ -6,13 +7,14 @@ public class Equipamento : Entidade
 {
     public double serie;
     public string nome;
-    public DateTime dataFabricacao;
+    public int dataFabricacao;
     public decimal preco;
     public string fabricante;
+    public Fabricante fabricanteRelacionado;
 
     public override string ToString()
     {
-        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante} | Data de Fabricação: {dataFabricacao}";
+        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricanteRelacionado} | Data de Fabricação: {dataFabricacao}";
     }
 
     public string Validar()
@@ -27,9 +29,6 @@ public class Equipamento : Entidade
 
         if (preco < 0)
             resultadoValidacao += "O campo \"preço\" precisa não pode ser negativo" + "\n";
-
-        if (string.IsNullOrEmpty(fabricante))
-            resultadoValidacao += "O campo \"fabricante\" é obrigatório" + "\n";
 
         if (serie == 0)
             resultadoValidacao += "O campo \"serie\" é obrigatório" + "\n";

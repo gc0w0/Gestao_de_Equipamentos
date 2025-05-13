@@ -16,6 +16,7 @@ namespace Gestao_de_Equipamentos.Compartilhado
 
             Console.WriteLine("Digite 1 para gerenciar Equipamentos:");
             Console.WriteLine("Digite 2 para gerenciar Chamados:");
+            Console.WriteLine("Digite 3 para gerenciar Fabricantes");
             Console.WriteLine("Digite S para sair");
             Console.Write(">: ");
 

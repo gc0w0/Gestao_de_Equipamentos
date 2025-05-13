@@ -1,14 +1,19 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloFabricante;
+using System.Runtime.Serialization;
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento
 {
     public class TelaEquipamento : Tela
     {
         private RepositorioEquipamento repositorioEquipamento;
+        private RepositorioFabricante repositorioFabricante;
 
-        public TelaEquipamento(RepositorioEquipamento repositorioEquipamento)
+
+        public TelaEquipamento(RepositorioEquipamento repositorioEquipamento, RepositorioFabricante repositorioFabricante)
         {
             this.repositorioEquipamento = repositorioEquipamento;
+            this.repositorioFabricante = repositorioFabricante;
         }
 
         public string ExibirOpcoesMenu()
@@ -126,6 +131,8 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             {
                 Console.WriteLine(e.ToString() + "\n");
             }
+
+            Console.ReadKey();
         }
 
         private Equipamento ObterDados()
@@ -139,21 +146,62 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             Console.Write("Digite o novo número de série: ");
             int novoSerieConversao = int.Parse(Console.ReadLine());
 
-            Console.Write("Digite o novo fabricante");
-            string novoFabricante = Console.ReadLine();
-
             Console.Write("Digite a nova data de fabricação: ");
-            DateTime novaDataFabricacao = DateTime.Parse(Console.ReadLine());
+            int novaDataFabricacao = int.Parse(Console.ReadLine());
+
+            VisualizarFabricantes();
+
+            Console.Write("Digite o ID do fabricante que deseja selecionar");
+            int idFabricante = Convert.ToInt32(Console.ReadLine());
+            
+            Fabricante fabricanteSelecionado = repositorioFabricante.SelecionarPorId(idFabricante);
+
+            //string novoNome = "Equipamento2";
+            //decimal novoPreco = 122;
+            //int novoSerieConversao = 12133132;
+            //string novoFabricante = "Fabricante1";
+            //DateTime novaDataFabricacao = DateTime.Today;
+
 
             var equipamento = new Equipamento();
             equipamento.nome = novoNome;
             equipamento.preco = novoPreco;
             equipamento.serie = novoSerieConversao;
-            equipamento.fabricante = novoFabricante;
+            equipamento.fabricanteRelacionado = fabricanteSelecionado;
             equipamento.dataFabricacao = novaDataFabricacao;
 
             return equipamento;
         }
 
+        private void VisualizarFabricantes()
+        {
+            Console.WriteLine();
+
+            Console.WriteLine("Visualização de Fabricantes");
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
+                "Id", "Nome", "Email", "Telefone"
+            );
+
+            List<Fabricante> fabricantes = repositorioFabricante.SelecionarTodos();
+
+            for (int i = 0; i < fabricantes.Count; i++)
+            {
+                Fabricante e = fabricantes[i];
+
+                if (e == null)
+                    continue;
+
+                Console.WriteLine(
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
+                    e.id, e.nome, e.email, e.telefone
+                );
+            }
+
+            Console.ReadLine();
+        }
     }
 }
