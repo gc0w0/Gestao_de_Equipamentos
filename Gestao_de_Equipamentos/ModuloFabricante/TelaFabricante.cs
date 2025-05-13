@@ -7,7 +7,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
     public class TelaFabricante : Tela
     {
         RepositorioEquipamento repositorioEquipamento;
-
         RepositorioFabricante repositorioFabricante;
 
         public TelaFabricante(RepositorioFabricante repositorioFabricante, RepositorioEquipamento repositorioEquipamento)
@@ -18,6 +17,8 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
         public string ExibirOpcoesMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("Bem-vindo ao gerenciamento de Fabricantes!\n");
             Console.WriteLine("Digite 1 para cadastrar um novo fabricante:");
             Console.WriteLine("Digite 2 para exibir os fabricantes:");
@@ -55,69 +56,81 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
         internal void EditarFabricante()
         {
-            Console.Write("Digite o ID do fabricante que deseja editar: ");
+            Console.Clear();
+
+            Console.WriteLine("Módulo de Fabricantes"); //título
+
+            Console.WriteLine("Editando fabricantes..."); //subtítulo
+
+            ExibirFabricante(mostrarCabecalho: false);
+
+            Console.WriteLine("Digite o Fabricante que deseja editar");
             var id = int.Parse(Console.ReadLine());
 
-            Fabricante fabricante = repositorioFabricante.fabricantesRegistrados.FirstOrDefault(c => c.id == id);
+            Fabricante fabricante = ObterDados();
 
-            if (fabricante == null)
-                Console.WriteLine("Fabricante não encontrado.");
+            bool conseguiuEditar = repositorioFabricante.EditarFabricante(id, fabricante);
 
-            Console.Write("Novo nome (ENTER para manter): ");
-            string novoTitulo = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(novoTitulo))
-                fabricante.nome = novoTitulo;
+            if (conseguiuEditar == false)
+            {
+                Console.WriteLine("Não foi possível editar o registro selecionado");
+                Console.ReadKey();
+                EditarFabricante();
+                return;
+            }
 
-            Console.Write("Nova email (ENTER para manter): ");
-            string novaDescricao = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(novaDescricao))
-                fabricante.email = novaDescricao;
-
-            Console.Write("Novo ID de equipamento (ENTER para manter): ");
-            string novoIdEquipamentoConvercao = Console.ReadLine();
-            //if (int.TryParse(novoIdEquipamentoConvercao, out int novoIdEquipamento))
-            //{
-            //    Equipamento equipamentoAlterado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == novoIdEquipamento);
-            //    if (equipamentoAlterado != null)
-            //        chamado.equipamentoRelacionado = equipamentoAlterado;
-            //}
-
-            Console.WriteLine("Fabricante atualizado.");
+            Console.WriteLine("Fabricante editado com sucesso!");
+            Console.ReadKey();
         }
 
         internal void ExcluirFabricante()
         {
-            Console.Write("Digite o ID do fabricante a excluir: ");
+            Console.Clear();
+
+            Console.WriteLine("Módulo de Fabricantes"); //título
+
+            Console.WriteLine("Excluindo Fabricantes..."); //subtítulo
+
+            ExibirFabricante(mostrarCabecalho: false);
+
+            Console.WriteLine("Digite o Fabricante que deseja excluir");
             var id = int.Parse(Console.ReadLine());
 
-            Fabricante fabricante = repositorioFabricante.fabricantesRegistrados.FirstOrDefault(c => c.id == id);
+            bool conseguiuExcluir = repositorioFabricante.ExcluirFabricante(id);
 
-            if (fabricante == null)
+            if (conseguiuExcluir == false)
             {
-                Console.WriteLine("Fabricante não encontrado.");
+                Console.WriteLine("Não foi possível excluir o registro selecionado");
+                Console.ReadKey();
+                ExcluirFabricante();
                 return;
             }
 
-            repositorioFabricante.fabricantesRegistrados.Remove(fabricante);
-            Console.WriteLine("Fabricante excluído com sucesso.");
+            Console.WriteLine("Fabricante removido com sucesso!");
+            Console.ReadKey();
         }
 
-        internal void ExibirFabricante()
+        public void ExibirFabricante(bool mostrarCabecalho)
         {
-            List<Equipamento> todosEquipamentos = repositorioEquipamento.SelecionarTodos();
+          
 
-            Console.WriteLine("Fabricantes Registrados:");
-
-            foreach (var fabricante in repositorioFabricante.SelecionarTodos())
+            if (mostrarCabecalho)
             {
-                int quantidadeEquipamentos = todosEquipamentos.Count(e =>
-                    e.fabricanteRelacionado != null &&
-                    e.fabricanteRelacionado.id == fabricante.id);
+                Console.Clear();
 
-                Console.WriteLine(
-                    $"ID: {fabricante.id} | Nome: {fabricante.nome} | Email: {fabricante.email} | Telefone: {fabricante.telefone} | Equipamentos: {quantidadeEquipamentos}"
-                );
+                Console.WriteLine("Módulo de Fabricantes"); //título
+
+                Console.WriteLine("Visualizando fabricantes..."); //subtítulo
             }
+
+            List<Fabricante> fabricantes = repositorioFabricante.SelecionarTodos();
+
+            foreach (var e in fabricantes)
+            {
+                Console.WriteLine(e.ToString() + "\n");
+            }
+
+            Console.ReadKey();
         }
 
         public Fabricante ObterDados()
@@ -131,56 +144,14 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             Console.Write("Digite o telefone do fabricante: ");
             string telefone = Console.ReadLine();
 
-            //VisualizarEquipamentos();
-
-            //Console.Write("Digite o ID do equipamento que deseja selecionar: ");
-            //int idEquipamento = Convert.ToInt32(Console.ReadLine());
-
-            //Equipamento equipamentoSelecionado = repositorioEquipamento.SelecionarPorId(idEquipamento);
-
+          
             Fabricante fabricante = new Fabricante();
             fabricante.nome = nome;
             fabricante.email = email;
             fabricante.telefone = telefone;
-            //fabricante.equipamentoRelacionado = equipamentoSelecionado;
 
             return fabricante;
         }
-
-        #region Sessão Comentada
-        //public void VisualizarEquipamentos()
-        //{
-        //    Console.WriteLine();
-
-        //    Console.WriteLine("Visualização de Equipamentos");
-
-        //    Console.WriteLine();
-
-        //    Console.WriteLine(
-        //        "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
-        //        "Id", "Nome", "Preço Aquisição", "Número Série", "Fabricante", "Data Fabricação"
-        //    );
-
-        //    List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
-
-        //    for (int i = 0; i < equipamentos.Count; i++)
-        //    {
-        //        Equipamento e = equipamentos[i];
-
-        //        if (e == null)
-        //            continue;
-
-        //        Console.WriteLine(
-        //            "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
-        //            e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante, e.dataFabricacao.ToShortDateString()
-        //        );
-        //    }
-
-        //    Console.ReadLine();
-        //}
-        #endregion
-
-
 
 
     }

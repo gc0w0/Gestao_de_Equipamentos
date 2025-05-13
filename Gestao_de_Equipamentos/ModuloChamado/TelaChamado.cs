@@ -31,6 +31,8 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
         internal void CadastrarChamado()
         {
+            Console.Clear();
+
             Console.WriteLine("Cadastro de Chamados");
 
             Console.WriteLine("Cadastrando chamados...");
@@ -51,98 +53,83 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             Console.WriteLine("Chamado registrado com sucesso \n");
             Console.ReadKey();
 
-            #region codigo comentado
-            //Console.Write("Digite o título do chamado: ");
-            //string tituloChamado = Console.ReadLine();
-
-            //Console.Write("Digite a descrição do chamado: ");
-            //string descricaoChamado = Console.ReadLine();
-
-            //Console.Write("Digite o ID do equipamento relacionado: ");
-            //int idEquipamento = int.Parse(Console.ReadLine());
-            //var idEquipamento = 1;
-            //Equipamento equipamentoSelecionado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == idEquipamento);
-
-            ////if (equipamentoSelecionado == null)
-            ////{
-            ////    Console.WriteLine("Equipamento não encontrado.");
-            ////    return;
-            ////}
-
-            ////string dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
-            //int diasEmAberto = 0;
-
-
-            //var chamado = new Chamado();
-
-            //chamado.titulo = "tituloChamado";
-            //chamado.descricao = "descricaoChamado";
-            //chamado.dataAbertura = DateTime.Now.ToString("dd/MM/yyyy");
-            //chamado.equipamentoRelacionado = equipamentoSelecionado;
-            //chamado.diasEmAberto = diasEmAberto;
-
-            //repositorioChamado.InserirChamado(chamado);
-
-            //Console.WriteLine("Chamado registrado com sucesso!");
-            #endregion
         }
 
         internal void EditarChamado()
         {
-            Console.Write("Digite o ID do chamado que deseja editar: ");
+            Console.Clear();
+
+            Console.WriteLine("Módulo de Chamados"); //título
+
+            Console.WriteLine("Editando chamados..."); //subtítulo
+
+            ExibirChamados(mostrarCabecalho: false);
+
+            Console.WriteLine("Digite o Chamado que deseja editar");
             var id = int.Parse(Console.ReadLine());
 
-            Chamado chamado = repositorioChamado.chamadosRegistrados.FirstOrDefault(c => c.id == id);
+            Chamado chamado = ObterDados();
 
-            if (chamado == null)
-                Console.WriteLine("Chamado não encontrado.");
+            bool conseguiuEditar = repositorioChamado.EditarChamado(id, chamado);
 
-            Console.Write("Novo título (ENTER para manter): ");
-            string novoTitulo = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(novoTitulo))
-                chamado.titulo = novoTitulo;
+            if (conseguiuEditar == false)
+            {
+                Console.WriteLine("Não foi possível editar o registro selecionado");
+                Console.ReadKey();
+                EditarChamado();
+                return;
+            }
 
-            Console.Write("Nova descrição (ENTER para manter): ");
-            string novaDescricao = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(novaDescricao))
-                chamado.descricao = novaDescricao;
-
-            Console.Write("Novo ID de equipamento (ENTER para manter): ");
-            string novoIdEquipamentoConvercao = Console.ReadLine();
-            //if (int.TryParse(novoIdEquipamentoConvercao, out int novoIdEquipamento))
-            //{
-            //    Equipamento equipamentoAlterado = repositorioEquipamento.equipamentosRegistrados.FirstOrDefault(e => e.id == novoIdEquipamento);
-            //    if (equipamentoAlterado != null)
-            //        chamado.equipamentoRelacionado = equipamentoAlterado;
-            //}
-
-
-            Console.WriteLine("Chamado atualizado.");
+            Console.WriteLine("Chamado editado com sucesso!");
+            Console.ReadKey();
         }
 
         internal void ExcluirChamado()
         {
-            Console.Write("Digite o ID do chamado a excluir: ");
+            Console.Clear();
+
+            Console.WriteLine("Módulo de Chamados"); //título
+
+            Console.WriteLine("Excluindo chamados..."); //subtítulo
+
+            ExibirChamados(mostrarCabecalho: false);
+
+            Console.WriteLine("Digite o Chamado que deseja excluir");
             var id = int.Parse(Console.ReadLine());
 
-            Chamado chamado = repositorioChamado.chamadosRegistrados.FirstOrDefault(c => c.id == id);
+            bool conseguiuExcluir = repositorioChamado.ExcluirChamado(id);
 
-            if (chamado == null)
+            if (conseguiuExcluir == false)
             {
-                Console.WriteLine("Chamado não encontrado.");
+                Console.WriteLine("Não foi possível excluir o registro selecionado");
+                Console.ReadKey();
+                ExcluirChamado();
                 return;
             }
 
-            repositorioChamado.chamadosRegistrados.Remove(chamado);
-            Console.WriteLine("Chamado excluído com sucesso.");
+            Console.WriteLine("Chamado removido com sucesso!");
+            Console.ReadKey();
         }
 
-        internal void ExibirChamado()
+        public void ExibirChamados(bool mostrarCabecalho)
         {
-            Console.WriteLine("Chamados Registrados:");
+            if (mostrarCabecalho)
+            {
+                Console.Clear();
 
-            foreach (var chamado in repositorioChamado.chamadosRegistrados)
-                Console.WriteLine(chamado.ToString() + "\n");
+                Console.WriteLine("Módulo de Chamados"); //título
+
+                Console.WriteLine("Visualizando chamados..."); //subtítulo
+            }
+
+            List<Chamado> chamados = repositorioChamado.SelecionarTodos();
+
+            foreach (var e in chamados)
+            {
+                Console.WriteLine(e.ToString() + "\n");
+            }
+
+            Console.ReadKey();
         }
 
         public Chamado ObterDados()

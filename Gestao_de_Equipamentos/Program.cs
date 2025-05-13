@@ -54,7 +54,7 @@ namespace Gestao_de_Equipamentos
                         telaChamado.CadastrarChamado();
 
                     else if (telaChamado.opcaoEscolhida == "2")
-                        telaChamado.ExibirChamado();
+                        telaChamado.ExibirChamados(mostrarCabecalho: true);
                     else if (telaChamado.opcaoEscolhida == "3")
                         telaChamado.EditarChamado();
                     else if (telaChamado.opcaoEscolhida == "4")
@@ -83,7 +83,7 @@ namespace Gestao_de_Equipamentos
                     if (telaFabricante.opcaoEscolhida == "1")
                         telaFabricante.CadastrarFabricante();
                     else if (telaFabricante.opcaoEscolhida == "2")
-                        telaFabricante.ExibirFabricante();
+                        telaFabricante.ExibirFabricante(mostrarCabecalho: true);
                     else if (telaFabricante.opcaoEscolhida == "3")
                         telaFabricante.EditarFabricante();
                     else if (telaFabricante.opcaoEscolhida == "4")
