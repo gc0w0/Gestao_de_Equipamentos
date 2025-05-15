@@ -17,6 +17,8 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
         public string ExibirOpcoesMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("Bem-vindo ao gerenciamento de Chamados!\n");
             Console.WriteLine("Digite 1 para cadastrar um novo chamado:");
             Console.WriteLine("Digite 2 para exibir os chamados:");
@@ -33,7 +35,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
         {
             Console.Clear();
 
-            Console.WriteLine("Cadastro de Chamados");
+            Console.WriteLine("Modulo de Chamados");
 
             Console.WriteLine("Cadastrando chamados...");
 
@@ -149,11 +151,11 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             Equipamento equipamentoSelecionado = repositorioEquipamento.SelecionarPorId(idEquipamento);
 
-            Chamado chamado = new Chamado();
+            Chamado chamado = new Chamado(titulo, descricao, dataAbertura, equipamentoSelecionado);
             chamado.titulo = titulo;
             chamado.descricao = descricao;
             chamado.dataAbertura = dataAbertura;
-            chamado.equipamentoRelacionado = equipamentoSelecionado;
+            chamado.equipamento = equipamentoSelecionado;
 
             return chamado;
         }
@@ -171,11 +173,11 @@ namespace Gestao_de_Equipamentos.ModuloChamado
                 "Id", "Nome", "Preço Aquisição", "Número Série", "Fabricante", "Data Fabricação"
             );
 
-            List<Equipamento> equipamentos = repositorioEquipamento.SelecionarTodos();
+            List<Entidade> equipamentos = repositorioEquipamento.SelecionarTodos();
 
             for (int i = 0; i < equipamentos.Count; i++)
             {
-                Equipamento e = equipamentos[i];
+                Equipamento e = (Equipamento)equipamentos[i];
 
                 if (e == null)
                     continue;

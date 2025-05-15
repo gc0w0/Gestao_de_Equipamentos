@@ -8,13 +8,24 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
         public string nome;
         public string email;
         public string telefone;
-        public Equipamento equipamentoRelacionado;
+        public List<Equipamento> equipamentos;
         public int quantidadeEquipamentos;
 
-
-        public override string ToString()
+        public Fabricante(string nome, string email, string telefone)
         {
-            return $" ID do Fabriancte:{id} Nome: {nome} | Telefone: {telefone}";
+            this.nome = nome;
+            this.email = email;
+            this.telefone = telefone;
+        }
+
+        //public override string ToString()
+        //{
+        //    return $" ID do Fabricante:{id} Nome: {nome} | Telefone: {telefone} | Equipamentos: {equipamentos.Count}";
+        //}
+
+        public override void MostrandoInformacoes()
+        {
+            Console.WriteLine($"ID: {id} | Nome: {nome} | Email: {email} | Telefone: {telefone} | Equipamentos: {equipamentos.Count} ");
         }
 
         public string Validar()

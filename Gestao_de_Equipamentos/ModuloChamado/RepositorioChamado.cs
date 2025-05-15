@@ -4,12 +4,12 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 {
     public class RepositorioChamado : Repositorio
     {              
-        public List<Chamado> chamadosRegistrados = new List<Chamado>();       
+        public List<Chamado> registros = new List<Chamado>();       
 
         public void InserirChamado(Chamado chamado)
         {
-            chamado.id = chamadosRegistrados.Count + 1;
-            chamadosRegistrados.Add(chamado);
+            chamado.id = registros.Count + 1;
+            registros.Add(chamado);
         }
 
         public bool EditarChamado(int id, Chamado chamadoAtualizado)
@@ -22,7 +22,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             chamado.titulo = chamadoAtualizado.titulo;
             chamado.dataAbertura = chamadoAtualizado.dataAbertura;
             chamado.descricao = chamadoAtualizado.descricao;
-            chamado.equipamentoRelacionado = chamadoAtualizado.equipamentoRelacionado;
+            chamado.equipamento = chamadoAtualizado.equipamento;
             chamado.diasEmAberto = chamadoAtualizado.diasEmAberto;
 
             return true;
@@ -31,12 +31,12 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
         public Chamado SelecionarPorId(int id)
         {
-            return chamadosRegistrados.FirstOrDefault(e => e.id == id);
+            return registros.FirstOrDefault(e => e.id == id);
         }
 
         internal List<Chamado> SelecionarTodos()
         {
-            return chamadosRegistrados;
+            return registros;
         }
 
         internal bool ExcluirChamado(int id)
@@ -46,7 +46,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             if (chamado == null)
                 return false;
 
-            chamadosRegistrados.Remove(chamado);
+            registros.Remove(chamado);
 
             return true;
         }

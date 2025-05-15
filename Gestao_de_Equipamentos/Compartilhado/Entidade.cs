@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestao_de_Equipamentos.ModuloEquipamento;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,10 @@ namespace Gestao_de_Equipamentos.Compartilhado
     public class Entidade
     {
         public int id;
+
+        public virtual void MostrandoInformacoes()
+        {
+            Console.WriteLine($" ID:" + id);
+        }
     }
 }

@@ -33,7 +33,9 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
         internal void CadastrarFabricante()
         {
-            Console.WriteLine("Cadastro de Fabricantes");
+            Console.Clear();
+
+            Console.WriteLine("Modulo de Fabricantes");
 
             Console.WriteLine("Cadastrando fabricantes...");
 
@@ -48,7 +50,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
                 return;
             }
 
-            repositorioFabricante.InserirFabricante(fabricante);
+            repositorioFabricante.InserirRegistro(fabricante);
 
             Console.WriteLine("Fabricante registrado com sucesso \n");
             Console.ReadKey();
@@ -113,7 +115,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
         public void ExibirFabricante(bool mostrarCabecalho)
         {
           
-
             if (mostrarCabecalho)
             {
                 Console.Clear();
@@ -123,11 +124,11 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
                 Console.WriteLine("Visualizando fabricantes..."); //subtítulo
             }
 
-            List<Fabricante> fabricantes = repositorioFabricante.SelecionarTodos();
+            List<Entidade> fabricantes = repositorioFabricante.SelecionarTodos();
 
-            foreach (var e in fabricantes)
+            foreach (var f in repositorioFabricante.SelecionarTodos())
             {
-                Console.WriteLine(e.ToString() + "\n");
+                f.MostrandoInformacoes();
             }
 
             Console.ReadKey();
@@ -145,7 +146,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             string telefone = Console.ReadLine();
 
           
-            Fabricante fabricante = new Fabricante();
+            Fabricante fabricante = new Fabricante(nome, email, telefone);
             fabricante.nome = nome;
             fabricante.email = email;
             fabricante.telefone = telefone;

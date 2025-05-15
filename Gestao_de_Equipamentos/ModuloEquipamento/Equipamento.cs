@@ -5,16 +5,30 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento;
 
 public class Equipamento : Entidade
 {
-    public double serie;
+    public double serie; //tem que ser string
     public string nome;
-    public int dataFabricacao;
+    public DateTime dataFabricacao;
     public decimal preco;
-    public string fabricante;
-    public Fabricante fabricanteRelacionado;
+    public Fabricante fabricante;
+    public List<Chamado> chamados;
+
+    public Equipamento(string nome, decimal preco, double serie, Fabricante fabricante, DateTime dataFabricacao)
+    {
+        this.serie = serie;
+        this.nome = nome;
+        this.dataFabricacao = dataFabricacao;
+        this.preco = preco;
+        this.fabricante = fabricante;
+    }
 
     public override string ToString()
     {
-        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricanteRelacionado} | Data de Fabricação: {dataFabricacao}";
+        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}";
+    }
+
+    public override void MostrandoInformacoes()
+    {
+        Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}");
     }
 
     public string Validar()
