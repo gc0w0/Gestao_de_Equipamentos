@@ -6,12 +6,6 @@ namespace Gestao_de_Equipamentos.ModuloChamado
     {              
         public List<Chamado> registros = new List<Chamado>();       
 
-        public void InserirChamado(Chamado chamado)
-        {
-            chamado.id = registros.Count + 1;
-            registros.Add(chamado);
-        }
-
         public bool EditarChamado(int id, Chamado chamadoAtualizado)
         {
             Chamado? chamado = SelecionarPorId(id);
@@ -39,16 +33,5 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             return registros;
         }
 
-        internal bool ExcluirChamado(int id)
-        {
-            Chamado? chamado = SelecionarPorId(id);
-
-            if (chamado == null)
-                return false;
-
-            registros.Remove(chamado);
-
-            return true;
-        }
     }
 }

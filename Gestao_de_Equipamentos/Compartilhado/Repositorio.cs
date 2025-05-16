@@ -18,6 +18,22 @@ namespace Gestao_de_Equipamentos.Compartilhado
             registros.Add(registro);
         }
 
+        public Entidade SelecionarPorId(int id)
+        {
+            return (Entidade)registros.FirstOrDefault(e => e.id == id);
+        }
+
+
+        internal bool ExcluirRegistro(int id)
+        {
+            Entidade? registro = SelecionarPorId(id);
+            if (registro == null)
+                return false;
+            registros.Remove(registro);
+            return true;
+        }
+
+
     }
 
 

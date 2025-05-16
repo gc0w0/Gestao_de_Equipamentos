@@ -102,7 +102,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             Console.Write("Digite o Equipamento que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
-            bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(id);
+            bool conseguiuExcluir = repositorioEquipamento.ExcluirRegistro(id);
 
             if (conseguiuExcluir == false)
             {
@@ -149,7 +149,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             int novoSerieConversao = int.Parse(Console.ReadLine());
 
             Console.Write("Digite a nova data de fabricação: ");
-            int novaDataFabricacao = int.Parse(Console.ReadLine());
+            DateTime novaDataFabricacao = DateTime.Parse(Console.ReadLine());
 
             VisualizarFabricantes();
 

@@ -32,16 +32,5 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             return registros;
         }
 
-        internal bool ExcluirEquipamento(int id)
-        {
-            Equipamento? equipamento = SelecionarPorId(id);
-
-            if (equipamento == null)
-                return false;
-
-            registros.Remove(equipamento);
-
-            return true;
-        }
     }
 }

@@ -35,13 +35,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             return registros;
         }
 
-        internal bool ExcluirFabricante(int id)
-        {
-            Fabricante? fabricante = SelecionarPorId(id);
-            if (fabricante == null)
-                return false;
-            registros.Remove(fabricante);
-            return true;
-        }
+
     }
 }

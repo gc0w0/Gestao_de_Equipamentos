@@ -8,38 +8,22 @@ namespace Gestao_de_Equipamentos
 {
     internal class Program
     {
-        private static void MostrarRegistros(List<Entidade> registros)
-        {
-            Console.WriteLine("Mostrando registros...");
-
-            for (int i = 0; i < registros.Count; i++)
-            {
-                registros[i].MostrarInformacoes();
-            }
-
-            Console.ReadKey();
-        }
-
         static void Main(string[] args)
         {
-            //MostrarRegistros(registros);
 
             RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
-            //repositorioEquipamento.InserirRegistro(new Equipamento());
 
             RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
-            //repositorioFabricante.InserirRegistro(new Fabricante());
 
             RepositorioChamado repositorioChamado = new RepositorioChamado();
             TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
             TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
             TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
 
-            //TelaPrincipal telaPrincipal = new TelaPrincipal();
+            TelaPrincipal telaPrincipal = new TelaPrincipal();
 
             while (true)
             {
-                TelaPrincipal telaPrincipal = new TelaPrincipal();
                 telaPrincipal.ExibirOpcoesMenu();
 
                 if (telaPrincipal.opcaoEscolhida == "1")

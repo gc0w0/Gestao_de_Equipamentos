@@ -98,7 +98,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             Console.Write("Digite o Fabricante que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
-            bool conseguiuExcluir = repositorioFabricante.ExcluirFabricante(id);
+            bool conseguiuExcluir = repositorioFabricante.ExcluirRegistro(id);
 
             if (conseguiuExcluir == false)
             {

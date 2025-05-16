@@ -99,7 +99,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             Console.Write("Digite o Chamado que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
-            bool conseguiuExcluir = repositorioChamado.ExcluirChamado(id);
+            bool conseguiuExcluir = repositorioChamado.ExcluirRegistro(id);
 
             if (conseguiuExcluir == false)
             {

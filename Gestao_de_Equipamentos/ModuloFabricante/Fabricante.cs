@@ -9,7 +9,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
         public string nome;
         public string email;
         public string telefone;
-        //public List<Equipamento> equipamentos;
         public int quantidadeEquipamentos;
         public List<Equipamento> equipamentos = new List<Equipamento>();
 
