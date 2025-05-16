@@ -12,7 +12,7 @@ public class Equipamento : Entidade
     public Fabricante fabricante;
     public List<Chamado> chamados;
 
-    public Equipamento(string nome, decimal preco, double serie, Fabricante fabricante, DateTime dataFabricacao)
+    public Equipamento(double serie, string nome, DateTime dataFabricacao, decimal preco, Fabricante fabricante)
     {
         this.serie = serie;
         this.nome = nome;
@@ -21,12 +21,7 @@ public class Equipamento : Entidade
         this.fabricante = fabricante;
     }
 
-    public override string ToString()
-    {
-        return $"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}";
-    }
-
-    public override void MostrandoInformacoes()
+    public override void MostrarInformacoes()
     {
         Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}");
     }

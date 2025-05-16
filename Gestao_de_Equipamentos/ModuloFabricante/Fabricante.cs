@@ -5,25 +5,22 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 {
     public class Fabricante : Entidade
     {
+        private RepositorioEquipamento repositorioEquipamento;
         public string nome;
         public string email;
         public string telefone;
-        public List<Equipamento> equipamentos;
+        //public List<Equipamento> equipamentos;
         public int quantidadeEquipamentos;
+        public List<Equipamento> equipamentos = new List<Equipamento>();
 
         public Fabricante(string nome, string email, string telefone)
-        {
+        {   
             this.nome = nome;
             this.email = email;
             this.telefone = telefone;
         }
 
-        //public override string ToString()
-        //{
-        //    return $" ID do Fabricante:{id} Nome: {nome} | Telefone: {telefone} | Equipamentos: {equipamentos.Count}";
-        //}
-
-        public override void MostrandoInformacoes()
+        public override void MostrarInformacoes()
         {
             Console.WriteLine($"ID: {id} | Nome: {nome} | Email: {email} | Telefone: {telefone} | Equipamentos: {equipamentos.Count} ");
         }

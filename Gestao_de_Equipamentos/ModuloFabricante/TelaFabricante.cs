@@ -66,7 +66,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
             ExibirFabricante(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Fabricante que deseja editar");
+            Console.Write("Digite o Fabricante que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
 
             Fabricante fabricante = ObterDados();
@@ -95,7 +95,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
             ExibirFabricante(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Fabricante que deseja excluir");
+            Console.Write("Digite o Fabricante que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
             bool conseguiuExcluir = repositorioFabricante.ExcluirFabricante(id);
@@ -126,9 +126,9 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 
             List<Entidade> fabricantes = repositorioFabricante.SelecionarTodos();
 
-            foreach (var f in repositorioFabricante.SelecionarTodos())
+            for (int i = 0; i < fabricantes.Count; i++)
             {
-                f.MostrandoInformacoes();
+                fabricantes[i].MostrarInformacoes();
             }
 
             Console.ReadKey();

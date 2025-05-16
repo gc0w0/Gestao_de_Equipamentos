@@ -1,4 +1,5 @@
 ﻿using Gestao_de_Equipamentos.ModuloEquipamento;
+using Gestao_de_Equipamentos.ModuloFabricante;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace Gestao_de_Equipamentos.Compartilhado
             registros.Add(registro);
         }
 
-
-
-
     }
+
+
+
 }
+

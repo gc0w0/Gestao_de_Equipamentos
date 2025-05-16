@@ -20,13 +20,8 @@ namespace Gestao_de_Equipamentos
             this.equipamento = equipamento;
         }
 
-        public override string ToString()
-        {
-            
-            return $" ID do Chamado:{id} Título: {titulo} | Equipamento: {equipamento.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}";
-        }
 
-        public override void MostrandoInformacoes()
+        public override void MostrarInformacoes()
         {
             Console.WriteLine($" ID :{id} Título: {titulo} | Equipamento: {equipamento.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}");
         }

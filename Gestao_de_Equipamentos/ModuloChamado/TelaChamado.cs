@@ -50,7 +50,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
                 return;
             }
 
-            repositorioChamado.InserirChamado(chamado);
+            repositorioChamado.InserirRegistro(chamado);
 
             Console.WriteLine("Chamado registrado com sucesso \n");
             Console.ReadKey();
@@ -67,7 +67,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             ExibirChamados(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Chamado que deseja editar");
+            Console.Write("Digite o Chamado que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
 
             Chamado chamado = ObterDados();
@@ -96,7 +96,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             ExibirChamados(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Chamado que deseja excluir");
+            Console.Write("Digite o Chamado que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
             bool conseguiuExcluir = repositorioChamado.ExcluirChamado(id);
@@ -126,11 +126,10 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
             List<Chamado> chamados = repositorioChamado.SelecionarTodos();
 
-            foreach (var e in chamados)
+            for (int i = 0; i < chamados.Count; i++)
             {
-                Console.WriteLine(e.ToString() + "\n");
+                chamados[i].MostrarInformacoes();
             }
-
             Console.ReadKey();
         }
 
@@ -184,7 +183,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
 
                 Console.WriteLine (
                     "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}",
-                    e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante, e.dataFabricacao
+                    e.id, e.nome, e.preco.ToString("C2"), e.serie, e.fabricante.nome, e.dataFabricacao
                 );
             }
 

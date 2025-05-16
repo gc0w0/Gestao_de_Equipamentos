@@ -1,5 +1,6 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
 using Gestao_de_Equipamentos.ModuloFabricante;
+using Microsoft.Win32;
 using System.Runtime.Serialization;
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento
@@ -54,6 +55,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
             repositorioEquipamento.InserirRegistro(equipamento);
 
+
             Console.WriteLine("Equipamento registrado com sucesso \n");
             Console.ReadKey();
         }
@@ -68,7 +70,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
             ExibirEquipamentos(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Equipamento que deseja editar");
+            Console.Write("Digite o Equipamento que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
 
             Equipamento equipamento = ObterDados();
@@ -97,7 +99,7 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
             ExibirEquipamentos(mostrarCabecalho: false);
 
-            Console.WriteLine("Digite o Equipamento que deseja excluir");
+            Console.Write("Digite o Equipamento que deseja excluir: ");
             var id = int.Parse(Console.ReadLine());
 
             bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(id);
@@ -127,9 +129,9 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
             List<Entidade> equipamentos = repositorioEquipamento.SelecionarTodos();
 
-            foreach (var e in equipamentos)
+            for (int i = 0; i < equipamentos.Count; i++)
             {
-                Console.WriteLine(e.ToString() + "\n");
+                equipamentos[i].MostrarInformacoes();
             }
 
             Console.ReadKey();
@@ -163,12 +165,13 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             //DateTime novaDataFabricacao = DateTime.Today;
 
 
-            var equipamento = new Equipamento(novoNome, novoPreco, novoSerieConversao, fabricanteSelecionado, DateTime.Now);
+            var equipamento = new Equipamento(novoSerieConversao, novoNome, DateTime.Now, novoPreco, fabricanteSelecionado);
             equipamento.nome = novoNome;
             equipamento.preco = novoPreco;
             equipamento.serie = novoSerieConversao;
             equipamento.fabricante = fabricanteSelecionado;
             equipamento.dataFabricacao = DateTime.Now;
+            fabricanteSelecionado.equipamentos.Add(equipamento);
 
             return equipamento;
         }

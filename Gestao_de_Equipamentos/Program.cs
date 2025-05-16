@@ -2,13 +2,28 @@
 using Gestao_de_Equipamentos.ModuloChamado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
 using Gestao_de_Equipamentos.ModuloFabricante;
+using Microsoft.Win32;
 
 namespace Gestao_de_Equipamentos
 {
     internal class Program
     {
+        private static void MostrarRegistros(List<Entidade> registros)
+        {
+            Console.WriteLine("Mostrando registros...");
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                registros[i].MostrarInformacoes();
+            }
+
+            Console.ReadKey();
+        }
+
         static void Main(string[] args)
         {
+            //MostrarRegistros(registros);
+
             RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
             //repositorioEquipamento.InserirRegistro(new Equipamento());
 
@@ -20,10 +35,11 @@ namespace Gestao_de_Equipamentos
             TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
             TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
 
-            TelaPrincipal telaPrincipal = new TelaPrincipal();
+            //TelaPrincipal telaPrincipal = new TelaPrincipal();
 
             while (true)
             {
+                TelaPrincipal telaPrincipal = new TelaPrincipal();
                 telaPrincipal.ExibirOpcoesMenu();
 
                 if (telaPrincipal.opcaoEscolhida == "1")
@@ -61,7 +77,6 @@ namespace Gestao_de_Equipamentos
             telaChamado.ExibirOpcoesMenu();
             if (telaChamado.opcaoEscolhida == "1")
                 telaChamado.CadastrarChamado();
-
             else if (telaChamado.opcaoEscolhida == "2")
                 telaChamado.ExibirChamados(mostrarCabecalho: true);
             else if (telaChamado.opcaoEscolhida == "3")

@@ -9,11 +9,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
 {
     public class RepositorioFabricante : Repositorio
     {
-        //public void InserirFabricante(Fabricante fabricante)
-        //{
-        //    fabricante.id = registros.Count + 1;
-        //    registros.Add(fabricante);
-        //}
 
         public bool EditarFabricante(int id, Fabricante fabricanteAtualizado)
         {

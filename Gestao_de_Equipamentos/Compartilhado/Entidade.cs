@@ -11,7 +11,7 @@ namespace Gestao_de_Equipamentos.Compartilhado
     {
         public int id;
 
-        public virtual void MostrandoInformacoes()
+        public virtual void MostrarInformacoes()
         {
             Console.WriteLine($" ID:" + id);
         }
