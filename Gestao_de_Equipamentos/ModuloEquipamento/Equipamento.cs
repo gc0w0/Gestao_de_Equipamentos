@@ -3,7 +3,7 @@ using Gestao_de_Equipamentos.ModuloFabricante;
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento;
 
-public class Equipamento : Entidade
+public class Equipamento : EntidadeBase
 {
     public double serie; //tem que ser string
     public string nome;
@@ -12,6 +12,10 @@ public class Equipamento : Entidade
     public Fabricante fabricante;
     public List<Chamado> chamados;
 
+    public Equipamento()
+    {
+            
+    }
     public Equipamento(double serie, string nome, DateTime dataFabricacao, decimal preco, Fabricante fabricante)
     {
         this.serie = serie;
@@ -26,7 +30,18 @@ public class Equipamento : Entidade
         Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Preço {preco} | Fabricante: {fabricante.nome} | Data de Fabricação: {dataFabricacao}");
     }
 
-    public string Validar()
+    public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+    {
+        Equipamento equipamentoAtualizado = (Equipamento)registroAtualizado;
+
+        this.nome = equipamentoAtualizado.nome;
+        this.fabricante = equipamentoAtualizado.fabricante;
+        this.dataFabricacao = equipamentoAtualizado.dataFabricacao;
+        this.preco = equipamentoAtualizado.preco;
+        this.serie = equipamentoAtualizado.serie;
+    }
+
+    public override string Validar()
     {
         string resultadoValidacao = "";
 

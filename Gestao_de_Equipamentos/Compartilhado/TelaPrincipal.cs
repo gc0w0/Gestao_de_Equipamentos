@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Gestao_de_Equipamentos.Compartilhado
 {
-    public class TelaPrincipal : Tela
+    public class TelaPrincipal 
     {
+        public string opcaoEscolhida;
+
         public void ExibirOpcoesMenu()
         {
             Console.Clear();
@@ -17,6 +19,8 @@ namespace Gestao_de_Equipamentos.Compartilhado
             Console.WriteLine("Digite 1 para gerenciar Equipamentos:");
             Console.WriteLine("Digite 2 para gerenciar Chamados:");
             Console.WriteLine("Digite 3 para gerenciar Fabricantes");
+            Console.WriteLine("Digite 4 para gerenciar Setores");
+
             Console.WriteLine("Digite S para sair");
             Console.Write(">: ");
 

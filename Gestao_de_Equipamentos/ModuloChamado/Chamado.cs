@@ -4,7 +4,7 @@ using Gestao_de_Equipamentos.ModuloEquipamento;
 
 namespace Gestao_de_Equipamentos
 {
-    public class Chamado : Entidade
+    public class Chamado : EntidadeBase
     {
         public string titulo;
         public string descricao;
@@ -26,7 +26,18 @@ namespace Gestao_de_Equipamentos
             Console.WriteLine($" ID :{id} Título: {titulo} | Equipamento: {equipamento.nome} | Data: {dataAbertura} | Dias em aberto: {diasEmAberto}");
         }
 
-        public string Validar()
+        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        {
+            Chamado chamadoAtualizado = (Chamado)registroAtualizado;
+
+            this.titulo = chamadoAtualizado.titulo;
+            this.dataAbertura = chamadoAtualizado.dataAbertura;
+            this.descricao = chamadoAtualizado.descricao;
+            this.equipamento = chamadoAtualizado.equipamento;
+            this.diasEmAberto = chamadoAtualizado.diasEmAberto;
+        }
+
+        public override string Validar()
         {
             string resultadoValidacao = "";
 
