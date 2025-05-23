@@ -17,28 +17,6 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             modulo = "Fabricantes";
         }
 
-        public void ExibirFabricante(bool mostrarCabecalho)
-        {
-          
-            if (mostrarCabecalho)
-            {
-                Console.Clear();
-
-                Console.WriteLine("Módulo de Fabricantes"); //título
-
-                Console.WriteLine("Visualizando fabricantes..."); //subtítulo
-            }
-
-            List<EntidadeBase> fabricantes = repositorioFabricante.SelecionarTodos();
-
-            for (int i = 0; i < fabricantes.Count; i++)
-            {
-                fabricantes[i].MostrarInformacoes();
-            }
-
-            Console.ReadKey();
-        }
-
         public override EntidadeBase ObterDados()
         {
             Console.Write("Digite o nome do fabricante: ");

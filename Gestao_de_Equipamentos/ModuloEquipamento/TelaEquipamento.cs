@@ -10,7 +10,6 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
         private RepositorioEquipamento repositorioEquipamento;
         private RepositorioFabricante repositorioFabricante;
 
-
         public TelaEquipamento(RepositorioEquipamento repositorioEquipamento, RepositorioFabricante repositorioFabricante)
         {
             this.repositorioEquipamento = repositorioEquipamento;
@@ -18,28 +17,6 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
             repositorio = repositorioEquipamento;
             modulo = "Equipamentos";
         }
-        
-        public void ExibirEquipamentos(bool mostrarCabecalho)
-        {
-            if (mostrarCabecalho)
-            {
-                Console.Clear();
-
-                Console.WriteLine("Módulo de Equipamentos"); //título
-
-                Console.WriteLine("Visualizando equipamentos..."); //subtítulo
-            }
-
-            List<EntidadeBase> equipamentos = repositorioEquipamento.SelecionarTodos();
-
-            for (int i = 0; i < equipamentos.Count; i++)
-            {
-                equipamentos[i].MostrarInformacoes();
-            }
-
-            Console.ReadKey();
-        }
-
         public override EntidadeBase ObterDados()
         {
             Console.Write("Digite o novo nome: ");
@@ -78,7 +55,6 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
 
             return equipamento;
         }
-
         private void VisualizarFabricantes()
         {
             Console.WriteLine();

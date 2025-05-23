@@ -16,25 +16,6 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             modulo = "Chamados";
         }
 
-        public void ExibirChamados(bool mostrarCabecalho)
-        {
-            if (mostrarCabecalho)
-            {
-                Console.Clear();
-
-                Console.WriteLine("Módulo de Chamados"); //título
-
-                Console.WriteLine("Visualizando chamados..."); //subtítulo
-            }
-
-            List<EntidadeBase> chamados = repositorioChamado.SelecionarTodos();
-
-            for (int i = 0; i < chamados.Count; i++)
-            {
-                chamados[i].MostrarInformacoes();
-            }
-            Console.ReadKey();
-        }
 
         public override EntidadeBase ObterDados()
         {

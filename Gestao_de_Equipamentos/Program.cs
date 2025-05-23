@@ -2,6 +2,7 @@
 using Gestao_de_Equipamentos.ModuloChamado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
 using Gestao_de_Equipamentos.ModuloFabricante;
+using Gestao_de_Equipamentos.ModuloFuncionario;
 using Gestao_de_Equipamentos.ModuloSetor;
 using Microsoft.Win32;
 
@@ -29,6 +30,9 @@ namespace Gestao_de_Equipamentos
             var repositorioSetor = new RepositorioSetor();
             var telaSetor = new TelaSetor(repositorioSetor);
 
+            var repositorioFuncionario = new RepositorioFuncionario();
+            var telaFuncionario = new TelaFuncionario(repositorioFuncionario);
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -47,12 +51,28 @@ namespace Gestao_de_Equipamentos
                 else if (telaPrincipal.opcaoEscolhida == "4")
                     GerenciarSetores(telaSetor, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "5")
+                    GerenciarFuncionarios(telaFuncionario, telaPrincipal);
+
                 else if(telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
                     break;
                 }
             }
+        }
+
+        private static void GerenciarFuncionarios(TelaFuncionario telaFuncionario, TelaPrincipal telaPrincipal)
+        {
+            telaFuncionario.ExibirOpcoesMenu();
+            if (telaFuncionario.opcaoEscolhida == "1")
+                telaFuncionario.CadastrarRegistro();
+            else if (telaFuncionario.opcaoEscolhida == "2")
+                telaFuncionario.ExibirRegistro(mostrarCabecalho: true);
+            else if (telaFuncionario.opcaoEscolhida == "3")
+                telaFuncionario.EditarRegistro();
+            else if (telaFuncionario.opcaoEscolhida == "4")
+                telaFuncionario.ExcluirRegistro();
         }
 
         private static void GerenciarSetores(TelaSetor telaSetor, TelaPrincipal telaPrincipal)
@@ -102,7 +122,7 @@ namespace Gestao_de_Equipamentos
                 telaEquipamento.CadastrarRegistro();
 
             else if (telaEquipamento.opcaoEscolhida == "2")
-                telaEquipamento.ExibirEquipamentos(mostrarCabecalho: true);
+                telaEquipamento.ExibirRegistro(mostrarCabecalho: true);
 
             else if (telaEquipamento.opcaoEscolhida == "3")
                 telaEquipamento.EditarRegistro();

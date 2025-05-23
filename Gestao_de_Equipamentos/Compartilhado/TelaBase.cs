@@ -75,9 +75,9 @@ namespace Gestao_de_Equipamentos.Compartilhado
 
             Console.Write($"Digite o {modulo} que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
-            Setor setor = (Setor)ObterDados();
+            EntidadeBase registro = ObterDados();
 
-            bool conseguiuEditar = repositorio.EditarRegistro(id, setor);
+            bool conseguiuEditar = repositorio.EditarRegistro(id, registro);
 
             if (conseguiuEditar == false)
             {
