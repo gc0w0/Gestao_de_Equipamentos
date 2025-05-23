@@ -2,7 +2,7 @@
 
 namespace Gestao_de_Equipamentos.ModuloEquipamento;
 
-public class RepositorioEquipamento : RepositorioBase
+public class RepositorioEquipamento : RepositorioBase<Equipamento>
 {
 
 }

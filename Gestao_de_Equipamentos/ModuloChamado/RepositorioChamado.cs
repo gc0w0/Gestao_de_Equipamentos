@@ -2,8 +2,6 @@
 
 namespace Gestao_de_Equipamentos.ModuloChamado;
 
-public class RepositorioChamado : RepositorioBase
+public class RepositorioChamado : RepositorioBase<Chamado>
 {              
-
-
 }

@@ -2,7 +2,7 @@
 
 namespace Gestao_de_Equipamentos.ModuloFabricante;
 
-public class RepositorioFabricante : RepositorioBase
+public class RepositorioFabricante : RepositorioBase<Fabricante>
 {
 
 }

@@ -2,133 +2,136 @@
 using Gestao_de_Equipamentos.ModuloChamado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
 using Gestao_de_Equipamentos.ModuloFabricante;
-using Gestao_de_Equipamentos.ModuloFuncionario;
-using Gestao_de_Equipamentos.ModuloSetor;
-using Microsoft.Win32;
 
-namespace Gestao_de_Equipamentos
-{
-    internal class Program
-    {
-        static void Main(string[] args)
+namespace Gestao_de_Equipamentos;
+
+internal class Program
+{       
+    static void Main(string[] args)
+    {       
+        var repositorioFabricante = new RepositorioFabricante();
+        var fabricante = new Fabricante("Fab01", "fab01@gmail", "654987");
+        repositorioFabricante.InserirRegistro(fabricante);
+        var telaFabricante = new TelaFabricante(repositorioFabricante);
+
+        var repositorioEquipamento = new RepositorioEquipamento();
+        var equipamento = new Equipamento(321, "Mouse", DateTime.Now, 10, fabricante);
+        repositorioEquipamento.InserirRegistro(equipamento);
+        var telaEquipamento = new TelaEquipamento(telaFabricante, repositorioEquipamento, repositorioFabricante);
+
+        var repositorioChamado = new RepositorioChamado();
+        var telaChamado = new TelaChamado(telaEquipamento, repositorioChamado, repositorioEquipamento);
+
+        #region métodos comentados - CORRIGIR
+        //var repositorioSetor = new RepositorioSetor();
+        //var telaSetor = new TelaSetor(repositorioSetor);
+
+        //var repositorioFuncionario = new RepositorioFuncionario();
+        //var telaFuncionario = new TelaFuncionario(repositorioFuncionario);
+        #endregion
+
+        var telaPrincipal = new TelaPrincipal();
+
+        while (true)
         {
-            var repositorioFabricante = new RepositorioFabricante();
-            var fabricante = new Fabricante("Fab01", "fab01@gmail", "654987");
-            repositorioFabricante.InserirRegistro(fabricante);
+            telaPrincipal.ExibirOpcoesMenu();
 
-            var repositorioEquipamento = new RepositorioEquipamento();
-            var equipamento = new Equipamento(321, "Mouse", DateTime.Now, 10, fabricante);
-            repositorioEquipamento.InserirRegistro(equipamento); 
+            if (telaPrincipal.opcaoEscolhida == "1")
+                GerenciarEquipamentos(telaEquipamento, telaPrincipal);
 
+            else if (telaPrincipal.opcaoEscolhida == "2")
+                GerenciarChamados(telaChamado, telaPrincipal);
 
-            var repositorioChamado = new RepositorioChamado();
-            var telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
-            
-            var telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
-            var telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
+            else if (telaPrincipal.opcaoEscolhida == "3")
+                GerenciarFabricantes(telaFabricante, telaPrincipal);
 
-            var repositorioSetor = new RepositorioSetor();
-            var telaSetor = new TelaSetor(repositorioSetor);
+            #region métodos comentados - CORRIGIR
 
-            var repositorioFuncionario = new RepositorioFuncionario();
-            var telaFuncionario = new TelaFuncionario(repositorioFuncionario);
+            //else if (telaPrincipal.opcaoEscolhida == "4")
+            //    GerenciarSetores(telaSetor, telaPrincipal);
 
-            var telaPrincipal = new TelaPrincipal();
+            //else if (telaPrincipal.opcaoEscolhida == "5")
+            //    GerenciarFuncionarios(telaFuncionario, telaPrincipal);
 
-            while (true)
+            #endregion
+
+            else if (telaPrincipal.opcaoEscolhida == "S")
             {
-                telaPrincipal.ExibirOpcoesMenu();
-
-                if (telaPrincipal.opcaoEscolhida == "1")
-                    GerenciarEquipamentos(telaEquipamento, telaPrincipal);
-
-                else if (telaPrincipal.opcaoEscolhida == "2")
-                    GerenciarChamados(telaChamado, telaPrincipal);
-
-                else if (telaPrincipal.opcaoEscolhida == "3")
-                    GerenciarFabricantes(telaFabricante, telaPrincipal);
-
-                else if (telaPrincipal.opcaoEscolhida == "4")
-                    GerenciarSetores(telaSetor, telaPrincipal);
-
-                else if (telaPrincipal.opcaoEscolhida == "5")
-                    GerenciarFuncionarios(telaFuncionario, telaPrincipal);
-
-                else if(telaPrincipal.opcaoEscolhida == "S")
-                {
-                    Console.WriteLine("Saindo do sistema...");
-                    break;
-                }
+                Console.WriteLine("Saindo do sistema...");
+                break;
             }
         }
+    }
 
-        private static void GerenciarFuncionarios(TelaFuncionario telaFuncionario, TelaPrincipal telaPrincipal)
-        {
-            telaFuncionario.ExibirOpcoesMenu();
-            if (telaFuncionario.opcaoEscolhida == "1")
-                telaFuncionario.CadastrarRegistro();
-            else if (telaFuncionario.opcaoEscolhida == "2")
-                telaFuncionario.ExibirRegistro(mostrarCabecalho: true);
-            else if (telaFuncionario.opcaoEscolhida == "3")
-                telaFuncionario.EditarRegistro();
-            else if (telaFuncionario.opcaoEscolhida == "4")
-                telaFuncionario.ExcluirRegistro();
-        }
+    #region métodos comentados - CORRIGIR
 
-        private static void GerenciarSetores(TelaSetor telaSetor, TelaPrincipal telaPrincipal)
-        {
-            telaSetor.ExibirOpcoesMenu();
-            if (telaSetor.opcaoEscolhida == "1")
-                telaSetor.CadastrarRegistro();
-            else if (telaSetor.opcaoEscolhida == "2")
-                telaSetor.ExibirRegistro(mostrarCabecalho: true);
-            else if (telaSetor.opcaoEscolhida == "3")
-                telaSetor.EditarRegistro();
-            else if (telaSetor.opcaoEscolhida == "4")
-                telaSetor.ExcluirRegistro();
-        }
+    //private static void GerenciarFuncionarios(TelaFuncionario telaFuncionario, TelaPrincipal telaPrincipal)
+    //{
+    //    telaFuncionario.ExibirOpcoesMenu();
+    //    if (telaFuncionario.opcaoEscolhida == "1")
+    //        telaFuncionario.CadastrarRegistro();
+    //    else if (telaFuncionario.opcaoEscolhida == "2")
+    //        telaFuncionario.ExibirRegistro(mostrarCabecalho: true);
+    //    else if (telaFuncionario.opcaoEscolhida == "3")
+    //        telaFuncionario.EditarRegistro();
+    //    else if (telaFuncionario.opcaoEscolhida == "4")
+    //        telaFuncionario.ExcluirRegistro();
+    //}
 
-        private static void GerenciarFabricantes(TelaFabricante telaFabricante, TelaPrincipal telaPrincipal)
-        {
-            telaFabricante.ExibirOpcoesMenu();
-            if (telaFabricante.opcaoEscolhida == "1")
-                telaFabricante.CadastrarRegistro();
-            else if (telaFabricante.opcaoEscolhida == "2")
-                telaFabricante.ExibirRegistro(mostrarCabecalho: true);
-            else if (telaFabricante.opcaoEscolhida == "3")
-                telaFabricante.EditarRegistro();
-            else if (telaFabricante.opcaoEscolhida == "4")
-                telaFabricante.ExcluirRegistro();
-        }
+    //private static void GerenciarSetores(TelaSetor telaSetor, TelaPrincipal telaPrincipal)
+    //{
+    //    telaSetor.ExibirOpcoesMenu();
+    //    if (telaSetor.opcaoEscolhida == "1")
+    //        telaSetor.CadastrarRegistro();
+    //    else if (telaSetor.opcaoEscolhida == "2")
+    //        telaSetor.ExibirRegistro(mostrarCabecalho: true);
+    //    else if (telaSetor.opcaoEscolhida == "3")
+    //        telaSetor.EditarRegistro();
+    //    else if (telaSetor.opcaoEscolhida == "4")
+    //        telaSetor.ExcluirRegistro();
+    //}
 
-        private static void GerenciarChamados(TelaChamado telaChamado, TelaPrincipal telaPrincipal)
-        {
-            telaChamado.ExibirOpcoesMenu();
-            if (telaChamado.opcaoEscolhida == "1")
-                telaChamado.CadastrarRegistro();
-            else if (telaChamado.opcaoEscolhida == "2")
-                telaChamado.ExibirRegistro(mostrarCabecalho: true);
-            else if (telaChamado.opcaoEscolhida == "3")
-                telaChamado.EditarRegistro();
-            else if (telaChamado.opcaoEscolhida == "4")
-                telaChamado.ExcluirRegistro();
-        }
+    #endregion
+    private static void GerenciarFabricantes(TelaFabricante telaFabricante, TelaPrincipal telaPrincipal)
+    {
+        telaFabricante.ExibirOpcoesMenu();
+        if (telaFabricante.opcaoEscolhida == "1")
+            telaFabricante.CadastrarRegistro();
+        else if (telaFabricante.opcaoEscolhida == "2")
+            telaFabricante.VisualizarRegistros(mostrarCabecalho: true);
+        else if (telaFabricante.opcaoEscolhida == "3")
+            telaFabricante.EditarRegistro();
+        else if (telaFabricante.opcaoEscolhida == "4")
+            telaFabricante.ExcluirRegistro();
+    }
 
-        private static void GerenciarEquipamentos(TelaEquipamento telaEquipamento, TelaPrincipal telaPrincipal)
-        {
-            telaEquipamento.ExibirOpcoesMenu();
+    private static void GerenciarChamados(TelaChamado telaChamado, TelaPrincipal telaPrincipal)
+    {
+        telaChamado.ExibirOpcoesMenu();
+        if (telaChamado.opcaoEscolhida == "1")
+            telaChamado.CadastrarRegistro();
+        else if (telaChamado.opcaoEscolhida == "2")
+            telaChamado.VisualizarRegistros(mostrarCabecalho: true);
+        else if (telaChamado.opcaoEscolhida == "3")
+            telaChamado.EditarRegistro();
+        else if (telaChamado.opcaoEscolhida == "4")
+            telaChamado.ExcluirRegistro();
+    }
 
-            if (telaEquipamento.opcaoEscolhida == "1")
-                telaEquipamento.CadastrarRegistro();
+    private static void GerenciarEquipamentos(TelaEquipamento telaEquipamento, TelaPrincipal telaPrincipal)
+    {
+        telaEquipamento.ExibirOpcoesMenu();
 
-            else if (telaEquipamento.opcaoEscolhida == "2")
-                telaEquipamento.ExibirRegistro(mostrarCabecalho: true);
+        if (telaEquipamento.opcaoEscolhida == "1")
+            telaEquipamento.CadastrarRegistro();
 
-            else if (telaEquipamento.opcaoEscolhida == "3")
-                telaEquipamento.EditarRegistro();
+        else if (telaEquipamento.opcaoEscolhida == "2")
+            telaEquipamento.VisualizarRegistros(mostrarCabecalho: true);
 
-            else if (telaEquipamento.opcaoEscolhida == "4")
-                telaEquipamento.ExcluirRegistro();
-        }
+        else if (telaEquipamento.opcaoEscolhida == "3")
+            telaEquipamento.EditarRegistro();
+
+        else if (telaEquipamento.opcaoEscolhida == "4")
+            telaEquipamento.ExcluirRegistro();
     }
 }
