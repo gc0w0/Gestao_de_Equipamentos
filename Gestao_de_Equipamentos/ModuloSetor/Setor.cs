@@ -1,4 +1,5 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloEquipamento;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Gestao_de_Equipamentos.ModuloSetor
 
         public override void MostrarInformacoes()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($" ID :{id} Nome: {nome}");
         }
 
         public override string ValidarInformacoes()

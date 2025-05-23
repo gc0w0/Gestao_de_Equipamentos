@@ -15,92 +15,10 @@ namespace Gestao_de_Equipamentos.ModuloEquipamento
         {
             this.repositorioEquipamento = repositorioEquipamento;
             this.repositorioFabricante = repositorioFabricante;
+            repositorio = repositorioEquipamento;
             modulo = "Equipamentos";
         }
-
-        //public void CadastrarEquipamento()
-        //{
-        //    Console.Clear();
-
-        //    Console.WriteLine("Módulo de Equipamentos"); //título
-
-        //    Console.WriteLine("Cadastrando equipamentos..."); //subtítulo
-
-        //    Equipamento equipamento = ObterDados();
-
-        //    string resultadoValidacao = equipamento.ValidarInformacoes();
-
-        //    if (resultadoValidacao != "")
-        //    {
-        //        Console.WriteLine(resultadoValidacao);
-        //        Console.ReadKey();
-        //        CadastrarEquipamento();
-        //        return;
-        //    }
-
-        //    repositorioEquipamento.InserirRegistro(equipamento);
-
-
-        //    Console.WriteLine("Equipamento registrado com sucesso \n");
-        //    Console.ReadKey();
-        //}
-
-        public void EditarEquipamento()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Módulo de Equipamentos"); //título
-
-            Console.WriteLine("Editando equipamentos..."); //subtítulo
-
-            ExibirEquipamentos(mostrarCabecalho: false);
-
-            Console.Write("Digite o Equipamento que deseja editar: ");
-            var id = int.Parse(Console.ReadLine());
-
-            Equipamento equipamento = (Equipamento)ObterDados();
-
-            bool conseguiuEditar = repositorioEquipamento.EditarRegistro(id, equipamento);
-
-            if (conseguiuEditar == false)
-            {
-                Console.WriteLine("Não foi possível editar o registro selecionado");
-                Console.ReadKey();
-                EditarEquipamento();
-                return;
-            }
-
-            Console.WriteLine("Equipamento editado com sucesso!");
-            Console.ReadKey();
-        }
-
-        public void ExcluirEquipamento()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Módulo de Equipamentos"); //título
-
-            Console.WriteLine("Excluindo equipamentos..."); //subtítulo
-
-            ExibirEquipamentos(mostrarCabecalho: false);
-
-            Console.Write("Digite o Equipamento que deseja excluir: ");
-            var id = int.Parse(Console.ReadLine());
-
-            bool conseguiuExcluir = repositorioEquipamento.ExcluirRegistro(id);
-
-            if (conseguiuExcluir == false)
-            {
-                Console.WriteLine("Não foi possível excluir o registro selecionado");
-                Console.ReadKey();
-                ExcluirEquipamento();
-                return;
-            }
-
-            Console.WriteLine("Equipamento removido com sucesso!");
-            Console.ReadKey();
-        }
-
+        
         public void ExibirEquipamentos(bool mostrarCabecalho)
         {
             if (mostrarCabecalho)

@@ -1,4 +1,5 @@
 ﻿using Gestao_de_Equipamentos.ModuloChamado;
+using Gestao_de_Equipamentos.ModuloSetor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Gestao_de_Equipamentos.Compartilhado
 
         public RepositorioBase repositorio;
 
+        
         public string ExibirOpcoesMenu()
         {
             Console.Clear();
@@ -59,38 +61,82 @@ namespace Gestao_de_Equipamentos.Compartilhado
             Console.ReadKey();
 
         }
-
         public abstract EntidadeBase ObterDados(); //metodo muito especifico
 
-        //internal void EditarChamado()
-        //{
-        //    Console.Clear();
+        internal void EditarRegistro()
+        {
+            Console.Clear();
 
-        //    Console.WriteLine("Módulo de Chamados"); //título
+            Console.WriteLine($"Módulo de {modulo}"); //título
 
-        //    Console.WriteLine("Editando chamados..."); //subtítulo
+            Console.WriteLine($"Editando {modulo}..."); //subtítulo
 
-        //    ExibirChamados(mostrarCabecalho: false);
+            ExibirRegistro(mostrarCabecalho: false);
 
-        //    Console.Write("Digite o Chamado que deseja editar: ");
-        //    var id = int.Parse(Console.ReadLine());
+            Console.Write($"Digite o {modulo} que deseja editar: ");
+            var id = int.Parse(Console.ReadLine());
+            Setor setor = (Setor)ObterDados();
 
-        //    Chamado chamado = (Chamado)ObterDados();
+            bool conseguiuEditar = repositorio.EditarRegistro(id, setor);
 
-        //    bool conseguiuEditar = repositorioChamado.EditarRegistro(id, chamado);
+            if (conseguiuEditar == false)
+            {
+                Console.WriteLine("Não foi possível editar o registro selecionado");
+                Console.ReadKey();
+                EditarRegistro();
+                return;
+            }
 
-        //    if (conseguiuEditar == false)
-        //    {
-        //        Console.WriteLine("Não foi possível editar o registro selecionado");
-        //        Console.ReadKey();
-        //        EditarChamado();
-        //        return;
-        //    }
+            Console.WriteLine($"{modulo} editado com sucesso!");
+            Console.ReadKey();
+        }
 
-        //    Console.WriteLine("Chamado editado com sucesso!");
-        //    Console.ReadKey();
-        //}
+        public void ExibirRegistro(bool mostrarCabecalho)
+        {
+            if (mostrarCabecalho)
+            {
+                Console.Clear();
 
+                Console.WriteLine($"Módulo de {modulo}"); //título
+
+                Console.WriteLine($"Editando {modulo}..."); //subtítulo
+            }
+
+            List<EntidadeBase> registros = repositorio.SelecionarTodos();
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                registros[i].MostrarInformacoes();
+            }
+            Console.ReadKey();
+        }
+
+        internal void ExcluirRegistro()
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Módulo de {modulo}"); //título
+
+            Console.WriteLine($"Editando {modulo}..."); //subtítulo
+
+            ExibirRegistro(mostrarCabecalho: false);
+
+            Console.Write($"Digite o {modulo} que deseja excluir: ");
+            var id = int.Parse(Console.ReadLine());
+
+            bool conseguiuExcluir = repositorio.ExcluirRegistro(id);
+
+            if (conseguiuExcluir == false)
+            {
+                Console.WriteLine("Não foi possível excluir o registro selecionado");
+                Console.ReadKey();
+                ExcluirRegistro();
+                return;
+            }
+
+            Console.WriteLine("Chamado removido com sucesso!");
+            Console.ReadKey();
+        }
 
 
     }

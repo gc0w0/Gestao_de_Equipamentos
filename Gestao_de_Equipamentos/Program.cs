@@ -60,12 +60,12 @@ namespace Gestao_de_Equipamentos
             telaSetor.ExibirOpcoesMenu();
             if (telaSetor.opcaoEscolhida == "1")
                 telaSetor.CadastrarRegistro();
-            //else if (telaSetor.opcaoEscolhida == "2")
-            //    telaSetor.ExibirRegistros(mostrarCabecalho: true);
-            //else if (telaSetor.opcaoEscolhida == "3")
-            //    telaSetor.EditarFabricante();
-            //else if (telaSetor.opcaoEscolhida == "4")
-            //    telaSetor.ExcluirFabricante();
+            else if (telaSetor.opcaoEscolhida == "2")
+                telaSetor.ExibirRegistro(mostrarCabecalho: true);
+            else if (telaSetor.opcaoEscolhida == "3")
+                telaSetor.EditarRegistro();
+            else if (telaSetor.opcaoEscolhida == "4")
+                telaSetor.ExcluirRegistro();
         }
 
         private static void GerenciarFabricantes(TelaFabricante telaFabricante, TelaPrincipal telaPrincipal)
@@ -74,11 +74,11 @@ namespace Gestao_de_Equipamentos
             if (telaFabricante.opcaoEscolhida == "1")
                 telaFabricante.CadastrarRegistro();
             else if (telaFabricante.opcaoEscolhida == "2")
-                telaFabricante.ExibirFabricante(mostrarCabecalho: true);
+                telaFabricante.ExibirRegistro(mostrarCabecalho: true);
             else if (telaFabricante.opcaoEscolhida == "3")
-                telaFabricante.EditarFabricante();
+                telaFabricante.EditarRegistro();
             else if (telaFabricante.opcaoEscolhida == "4")
-                telaFabricante.ExcluirFabricante();
+                telaFabricante.ExcluirRegistro();
         }
 
         private static void GerenciarChamados(TelaChamado telaChamado, TelaPrincipal telaPrincipal)
@@ -87,11 +87,11 @@ namespace Gestao_de_Equipamentos
             if (telaChamado.opcaoEscolhida == "1")
                 telaChamado.CadastrarRegistro();
             else if (telaChamado.opcaoEscolhida == "2")
-                telaChamado.ExibirChamados(mostrarCabecalho: true);
+                telaChamado.ExibirRegistro(mostrarCabecalho: true);
             else if (telaChamado.opcaoEscolhida == "3")
-                telaChamado.EditarChamado();
+                telaChamado.EditarRegistro();
             else if (telaChamado.opcaoEscolhida == "4")
-                telaChamado.ExcluirChamado();
+                telaChamado.ExcluirRegistro();
         }
 
         private static void GerenciarEquipamentos(TelaEquipamento telaEquipamento, TelaPrincipal telaPrincipal)
@@ -105,10 +105,10 @@ namespace Gestao_de_Equipamentos
                 telaEquipamento.ExibirEquipamentos(mostrarCabecalho: true);
 
             else if (telaEquipamento.opcaoEscolhida == "3")
-                telaEquipamento.EditarEquipamento();
+                telaEquipamento.EditarRegistro();
 
             else if (telaEquipamento.opcaoEscolhida == "4")
-                telaEquipamento.ExcluirEquipamento();
+                telaEquipamento.ExcluirRegistro();
         }
     }
 }

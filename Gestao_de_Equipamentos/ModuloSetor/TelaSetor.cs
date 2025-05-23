@@ -1,4 +1,5 @@
 ﻿using Gestao_de_Equipamentos.Compartilhado;
+using Gestao_de_Equipamentos.ModuloChamado;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Gestao_de_Equipamentos.ModuloSetor
             Console.Write("Digite o nome: ");
             var nome = Console.ReadLine();
             return new Setor(nome);
-        } 
+        }
+        
     }
 }
