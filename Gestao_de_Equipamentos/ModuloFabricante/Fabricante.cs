@@ -3,7 +3,7 @@ using Gestao_de_Equipamentos.ModuloEquipamento;
 
 namespace Gestao_de_Equipamentos.ModuloFabricante
 {
-    public class Fabricante : Entidade
+    public class Fabricante : EntidadeBase
     {
         private RepositorioEquipamento repositorioEquipamento;
         public string nome;
@@ -24,7 +24,17 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             Console.WriteLine($"ID: {id} | Nome: {nome} | Email: {email} | Telefone: {telefone} | Equipamentos: {equipamentos.Count} ");
         }
 
-        public string Validar()
+        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        {
+            Fabricante fabricanteAtualizado = (Fabricante)registroAtualizado;
+
+            this.nome = fabricanteAtualizado.nome;
+            this.email = fabricanteAtualizado.email;
+            this.telefone = fabricanteAtualizado.telefone;
+            this.equipamentos = fabricanteAtualizado.equipamentos;
+        }
+
+        public override string ValidarInformacoes()
         {
             string resultadoValidacao = "";
             if (string.IsNullOrEmpty(nome))

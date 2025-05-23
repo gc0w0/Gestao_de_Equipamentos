@@ -4,7 +4,7 @@ using Gestao_de_Equipamentos.ModuloEquipamento;
 
 namespace Gestao_de_Equipamentos.ModuloFabricante
 {
-    public class TelaFabricante : Tela
+    public class TelaFabricante : TelaBase
     {
         RepositorioEquipamento repositorioEquipamento;
         RepositorioFabricante repositorioFabricante;
@@ -13,48 +13,34 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
         {
             this.repositorioFabricante = repositorioFabricante;
             this.repositorioEquipamento = repositorioEquipamento;
+            base.repositorio = repositorioFabricante;
+            modulo = "Fabricantes";
         }
 
-        public string ExibirOpcoesMenu()
-        {
-            Console.Clear();
+        //internal void CadastrarFabricante()
+        //{
+        //    Console.Clear();
 
-            Console.WriteLine("Bem-vindo ao gerenciamento de Fabricantes!\n");
-            Console.WriteLine("Digite 1 para cadastrar um novo fabricante:");
-            Console.WriteLine("Digite 2 para exibir os fabricantes:");
-            Console.WriteLine("Digite 3 para editar um fabricantes:");
-            Console.WriteLine("Digite 4 para excluir um fabricantes:");
-            Console.WriteLine("Digite S para sair");
-            Console.Write(">: ");
+        //    Console.WriteLine("Modulo de Fabricantes");
 
-            opcaoEscolhida = Console.ReadLine();
-            return opcaoEscolhida;
-        }
+        //    Console.WriteLine("Cadastrando fabricantes...");
 
-        internal void CadastrarFabricante()
-        {
-            Console.Clear();
+        //    Fabricante fabricante = ObterDados();
 
-            Console.WriteLine("Modulo de Fabricantes");
+        //    string resultadoValidacao = fabricante.ValidarInformacoes();
+        //    if (resultadoValidacao != "")
+        //    {
+        //        Console.WriteLine(resultadoValidacao);
+        //        Console.ReadKey();
+        //        CadastrarFabricante();
+        //        return;
+        //    }
 
-            Console.WriteLine("Cadastrando fabricantes...");
+        //    repositorioFabricante.InserirRegistro(fabricante);
 
-            Fabricante fabricante = ObterDados();
-
-            string resultadoValidacao = fabricante.Validar();
-            if (resultadoValidacao != "")
-            {
-                Console.WriteLine(resultadoValidacao);
-                Console.ReadKey();
-                CadastrarFabricante();
-                return;
-            }
-
-            repositorioFabricante.InserirRegistro(fabricante);
-
-            Console.WriteLine("Fabricante registrado com sucesso \n");
-            Console.ReadKey();
-        }
+        //    Console.WriteLine("Fabricante registrado com sucesso \n");
+        //    Console.ReadKey();
+        //}
 
         internal void EditarFabricante()
         {
@@ -69,9 +55,9 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             Console.Write("Digite o Fabricante que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
 
-            Fabricante fabricante = ObterDados();
+            Fabricante fabricante = (Fabricante)ObterDados();
 
-            bool conseguiuEditar = repositorioFabricante.EditarFabricante(id, fabricante);
+            bool conseguiuEditar = repositorioFabricante.EditarRegistro(id, fabricante);
 
             if (conseguiuEditar == false)
             {
@@ -124,7 +110,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
                 Console.WriteLine("Visualizando fabricantes..."); //subtítulo
             }
 
-            List<Entidade> fabricantes = repositorioFabricante.SelecionarTodos();
+            List<EntidadeBase> fabricantes = repositorioFabricante.SelecionarTodos();
 
             for (int i = 0; i < fabricantes.Count; i++)
             {
@@ -134,7 +120,7 @@ namespace Gestao_de_Equipamentos.ModuloFabricante
             Console.ReadKey();
         }
 
-        public Fabricante ObterDados()
+        public override EntidadeBase ObterDados()
         {
             Console.Write("Digite o nome do fabricante: ");
             string nome = Console.ReadLine();

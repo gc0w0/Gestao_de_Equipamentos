@@ -2,6 +2,7 @@
 using Gestao_de_Equipamentos.ModuloChamado;
 using Gestao_de_Equipamentos.ModuloEquipamento;
 using Gestao_de_Equipamentos.ModuloFabricante;
+using Gestao_de_Equipamentos.ModuloSetor;
 using Microsoft.Win32;
 
 namespace Gestao_de_Equipamentos
@@ -10,17 +11,25 @@ namespace Gestao_de_Equipamentos
     {
         static void Main(string[] args)
         {
+            var repositorioFabricante = new RepositorioFabricante();
+            var fabricante = new Fabricante("Fab01", "fab01@gmail", "654987");
+            repositorioFabricante.InserirRegistro(fabricante);
 
-            RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
+            var repositorioEquipamento = new RepositorioEquipamento();
+            var equipamento = new Equipamento(321, "Mouse", DateTime.Now, 10, fabricante);
+            repositorioEquipamento.InserirRegistro(equipamento); 
 
-            RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
 
-            RepositorioChamado repositorioChamado = new RepositorioChamado();
-            TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
-            TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
-            TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
+            var repositorioChamado = new RepositorioChamado();
+            var telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
+            
+            var telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
+            var telaFabricante = new TelaFabricante(repositorioFabricante, repositorioEquipamento);
 
-            TelaPrincipal telaPrincipal = new TelaPrincipal();
+            var repositorioSetor = new RepositorioSetor();
+            var telaSetor = new TelaSetor(repositorioSetor);
+
+            var telaPrincipal = new TelaPrincipal();
 
             while (true)
             {
@@ -35,6 +44,9 @@ namespace Gestao_de_Equipamentos
                 else if (telaPrincipal.opcaoEscolhida == "3")
                     GerenciarFabricantes(telaFabricante, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "4")
+                    GerenciarSetores(telaSetor, telaPrincipal);
+
                 else if(telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
@@ -43,11 +55,24 @@ namespace Gestao_de_Equipamentos
             }
         }
 
+        private static void GerenciarSetores(TelaSetor telaSetor, TelaPrincipal telaPrincipal)
+        {
+            telaSetor.ExibirOpcoesMenu();
+            if (telaSetor.opcaoEscolhida == "1")
+                telaSetor.CadastrarRegistro();
+            //else if (telaSetor.opcaoEscolhida == "2")
+            //    telaSetor.ExibirRegistros(mostrarCabecalho: true);
+            //else if (telaSetor.opcaoEscolhida == "3")
+            //    telaSetor.EditarFabricante();
+            //else if (telaSetor.opcaoEscolhida == "4")
+            //    telaSetor.ExcluirFabricante();
+        }
+
         private static void GerenciarFabricantes(TelaFabricante telaFabricante, TelaPrincipal telaPrincipal)
         {
             telaFabricante.ExibirOpcoesMenu();
             if (telaFabricante.opcaoEscolhida == "1")
-                telaFabricante.CadastrarFabricante();
+                telaFabricante.CadastrarRegistro();
             else if (telaFabricante.opcaoEscolhida == "2")
                 telaFabricante.ExibirFabricante(mostrarCabecalho: true);
             else if (telaFabricante.opcaoEscolhida == "3")
@@ -60,7 +85,7 @@ namespace Gestao_de_Equipamentos
         {
             telaChamado.ExibirOpcoesMenu();
             if (telaChamado.opcaoEscolhida == "1")
-                telaChamado.CadastrarChamado();
+                telaChamado.CadastrarRegistro();
             else if (telaChamado.opcaoEscolhida == "2")
                 telaChamado.ExibirChamados(mostrarCabecalho: true);
             else if (telaChamado.opcaoEscolhida == "3")
@@ -74,7 +99,7 @@ namespace Gestao_de_Equipamentos
             telaEquipamento.ExibirOpcoesMenu();
 
             if (telaEquipamento.opcaoEscolhida == "1")
-                telaEquipamento.CadastrarEquipamento();
+                telaEquipamento.CadastrarRegistro();
 
             else if (telaEquipamento.opcaoEscolhida == "2")
                 telaEquipamento.ExibirEquipamentos(mostrarCabecalho: true);

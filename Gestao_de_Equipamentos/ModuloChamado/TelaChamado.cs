@@ -3,59 +3,44 @@ using Gestao_de_Equipamentos.ModuloEquipamento;
 
 namespace Gestao_de_Equipamentos.ModuloChamado
 {
-    public class TelaChamado : Tela
+    public class TelaChamado : TelaBase
     {  
         RepositorioEquipamento repositorioEquipamento;
         RepositorioChamado repositorioChamado;
-
 
         public TelaChamado(RepositorioChamado repositorioChamado, RepositorioEquipamento repositorioEquipamento)
         {
             this.repositorioChamado = repositorioChamado;
             this.repositorioEquipamento = repositorioEquipamento;
+            modulo = "Chamados";
         }
 
-        public string ExibirOpcoesMenu()
-        {
-            Console.Clear();
 
-            Console.WriteLine("Bem-vindo ao gerenciamento de Chamados!\n");
-            Console.WriteLine("Digite 1 para cadastrar um novo chamado:");
-            Console.WriteLine("Digite 2 para exibir os chamados:");
-            Console.WriteLine("Digite 3 para editar um chamado:");
-            Console.WriteLine("Digite 4 para excluir um chamado:");
-            Console.WriteLine("Digite S para sair");
-            Console.Write(">: ");
+        //internal void CadastrarRegistro()
+        //{
+        //    Console.Clear();
 
-            opcaoEscolhida = Console.ReadLine();
-            return opcaoEscolhida;
-        }
+        //    Console.WriteLine("Modulo de Chamados");
 
-        internal void CadastrarChamado()
-        {
-            Console.Clear();
+        //    Console.WriteLine("Cadastrando chamados...");
 
-            Console.WriteLine("Modulo de Chamados");
+        //    Chamado chamado = ObterDados();
 
-            Console.WriteLine("Cadastrando chamados...");
+        //    string resultadoValidacao = chamado.ValidarInformacoes();
+        //    if (resultadoValidacao != "")
+        //    {
+        //        Console.WriteLine(resultadoValidacao);
+        //        Console.ReadKey();
+        //        CadastrarRegistro();
+        //        return;
+        //    }
 
-            Chamado chamado = ObterDados();
+        //    repositorioChamado.InserirRegistro(chamado);
 
-            string resultadoValidacao = chamado.Validar();
-            if (resultadoValidacao != "")
-            {
-                Console.WriteLine(resultadoValidacao);
-                Console.ReadKey();
-                CadastrarChamado();
-                return;
-            }
+        //    Console.WriteLine("Chamado registrado com sucesso \n");
+        //    Console.ReadKey();
 
-            repositorioChamado.InserirRegistro(chamado);
-
-            Console.WriteLine("Chamado registrado com sucesso \n");
-            Console.ReadKey();
-
-        }
+        //}
 
         internal void EditarChamado()
         {
@@ -70,9 +55,9 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             Console.Write("Digite o Chamado que deseja editar: ");
             var id = int.Parse(Console.ReadLine());
 
-            Chamado chamado = ObterDados();
+            Chamado chamado = (Chamado)ObterDados();
 
-            bool conseguiuEditar = repositorioChamado.EditarChamado(id, chamado);
+            bool conseguiuEditar = repositorioChamado.EditarRegistro(id, chamado);
 
             if (conseguiuEditar == false)
             {
@@ -124,7 +109,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
                 Console.WriteLine("Visualizando chamados..."); //subtítulo
             }
 
-            List<Chamado> chamados = repositorioChamado.SelecionarTodos();
+            List<EntidadeBase> chamados = repositorioChamado.SelecionarTodos();
 
             for (int i = 0; i < chamados.Count; i++)
             {
@@ -133,11 +118,11 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             Console.ReadKey();
         }
 
-        public Chamado ObterDados()
+        public override EntidadeBase ObterDados()
         {
             Console.Write("Digite o título do chamado: ");
             string titulo = Console.ReadLine();
-
+             
             Console.Write("Digite a descrição do chamado: ");
             string descricao = Console.ReadLine();
 
@@ -148,7 +133,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
             Console.Write("Digite o ID do equipamento que deseja selecionar: ");
             int idEquipamento = Convert.ToInt32(Console.ReadLine());
 
-            Equipamento equipamentoSelecionado = repositorioEquipamento.SelecionarPorId(idEquipamento);
+            Equipamento equipamentoSelecionado = (Equipamento)repositorioEquipamento.SelecionarPorId(idEquipamento);
 
             Chamado chamado = new Chamado(titulo, descricao, dataAbertura, equipamentoSelecionado);
             chamado.titulo = titulo;
@@ -172,7 +157,7 @@ namespace Gestao_de_Equipamentos.ModuloChamado
                 "Id", "Nome", "Preço Aquisição", "Número Série", "Fabricante", "Data Fabricação"
             );
 
-            List<Entidade> equipamentos = repositorioEquipamento.SelecionarTodos();
+            List<EntidadeBase> equipamentos = repositorioEquipamento.SelecionarTodos();
 
             for (int i = 0; i < equipamentos.Count; i++)
             {
